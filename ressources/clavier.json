@@ -140,17 +140,17 @@
         "rating": 4.1
     },
     {
-    "id": 11,
-    "name": "Corsair K70 RGB MK.2",
-    "marque": "Corsair",
-    "type": "Gaming",
-    "switches": "Cherry MX Red",
-    "layout": "Full Size",
-    "wireless": false,
-    "rgb": true,
-    "hot_swappable": false,
-    "price": 159.99,
-    "stock": 15,
-    "rating": 4.5
+        "id": 11,
+        "name": "Corsair K70 RGB MK.2",
+        "marque": "Corsair",
+        "type": "Gaming",
+        "switches": "Cherry MX Red",
+        "layout": "Full Size",
+        "wireless": false,
+        "rgb": true,
+        "hot_swappable": false,
+        "price": 159.99,
+        "stock": 15,
+        "rating": 4.5
     }
 ]
