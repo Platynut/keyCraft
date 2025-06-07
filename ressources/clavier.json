@@ -152,5 +152,19 @@
         "price": 159.99,
         "stock": 15,
         "rating": 4.5
+    },
+    {
+        "id": 12,
+        "name": "Epomaker TH80",
+        "marque": "Epomaker",
+        "type": "Custom",
+        "switches": "Gateron Pro Yellow",
+        "layout": "75%",
+        "wireless": true,
+        "rgb": true,
+        "hot_swappable": true,
+        "price": 95.9,
+        "stock": 10,
+        "rating": null
     }
 ]
