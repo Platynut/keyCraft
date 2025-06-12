@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "items": [
+            {
+                "id": 10,
+                "name": "Royal Kludge RK84",
+                "quantity": 2,
+                "price": 69.99
+            },
+            {
+                "id": 12,
+                "name": "Epomaker TH80",
+                "quantity": 1,
+                "price": 95.9
+            }
+        ],
+        "totalPrice": 235.88,
+        "status": "en attente",
+        "date": "2025-06-12T09:56:30.569Z"
+    }
+]
