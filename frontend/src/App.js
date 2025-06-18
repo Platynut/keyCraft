@@ -1,9 +1,9 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Login from './pages/login';
-import Register from './pages/register';
-import Profile from './pages/profile';
-import ForgotPassword from './pages/forgotPassword';
-import ResetPassword from './pages/resetpassword'; // Attention à la casse !
+import Login from './pages/Auth/LoginPage/LoginPage.jsx';
+import Register from './pages/Auth/RegisterPage/RegisterPage.jsx';
+import Profile from './pages/Profile/ProfilePage/ProfilePage.jsx';
+import ForgotPassword from './pages/Auth/ForgotPasswordPage/ForgotPasswordPage.jsx';
+import ResetPassword from './pages/Auth/ResetPasswordPage/ResetPasswordPage.jsx'; // Attention à la casse !
 
 function App() {
   const navigate = useNavigate();
