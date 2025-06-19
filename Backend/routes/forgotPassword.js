@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000;
     await user.save();
 
-    console.log(`Lien de reset : http://localhost:3000/reset-password/${resetToken}`);
+    console.log(`Lien de reset : http://localhost:3001/reset-password/${resetToken}`);
 
     res.json({ message: "Email de réinitialisation envoyé" });
   } catch (err) {

@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../models/User');
 
@@ -17,14 +16,14 @@ router.post('/:token', async (req, res) => {
       return res.status(400).json({ message: 'Lien invalide ou expiré.' });
     }
 
-    const hashed = await bcrypt.hash(newPassword, 10);
-    user.password = hashed;
+    user.password = newPassword; // pas de hash ici
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
-    await user.save();
+    await user.save(); // le hash se fait ici automatiquement
 
     res.json({ message: 'Mot de passe réinitialisé avec succès.' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });

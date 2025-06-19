@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../Style.css'; 
+import '../../../styles/globals.css';
 import { Link } from 'react-router-dom';
 
 function Login({ onLogin }) {

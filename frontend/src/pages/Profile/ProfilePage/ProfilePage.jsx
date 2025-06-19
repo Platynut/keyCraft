@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Style.css';
+import '../../../styles/globals.css';
 
 function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('');
 
-  // Formulaire pour mise à jour
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -17,7 +16,7 @@ function Profile() {
     postalCode: '',
   });
 
-  // Récupérer le profil utilisateur
+  // 🔐 Vérifie le token et charge les données utilisateur
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -52,13 +51,13 @@ function Profile() {
       });
   }, [navigate]);
 
-  // Mettre à jour les champs du formulaire
+  // 📝 Mise à jour des champs
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Soumettre la mise à jour
+  // 📤 Mise à jour du profil
   const handleUpdate = async e => {
     e.preventDefault();
     const token = localStorage.getItem('token');
@@ -97,6 +96,16 @@ function Profile() {
     }
   };
 
+  // Déconnexion
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+    const ResetPassword = () => {
+    navigate('/forgot-password');
+  };
+
   if (!user) return <p>Chargement...</p>;
 
   return (
@@ -111,6 +120,8 @@ function Profile() {
         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Ville" required />
         <input type="text" name="postalCode" value={formData.postalCode} onChange={handleChange} placeholder="Code Postal" required />
         <button type="submit">Mettre à jour</button>
+        <button type="button" onClick={handleLogout}>Déconnexion</button>
+        <button type="button" onClick={ResetPassword}>Modifier Mot de Passe</button>
       </form>
     </div>
   );
