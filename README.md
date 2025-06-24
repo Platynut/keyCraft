@@ -2,7 +2,7 @@
 
 ## Commandes utiles
 
-- **Installer les dépendances pour le Backend :**
+- **Les différentes dépendances installées pour le backend :**
 - Express – serveur et routage
   ```bash
   npm install express
