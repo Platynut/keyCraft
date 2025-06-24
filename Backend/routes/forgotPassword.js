@@ -2,13 +2,9 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const User = require('../models/User');
-
-const sendResetEmail = (email, token) => {
-  console.log(`Email envoyé à ${email} : http://localhost:3000/reset-password/${token}`);
-};
+const sendResetEmail = require('./mailer');
 
 router.post('/', async (req, res) => {
-  console.log('Headers reçus :', req.headers);
   const { email } = req.body;
   if (!email) return res.status(400).json({ message: 'Email requis' });
 
@@ -18,14 +14,15 @@ router.post('/', async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1h
     await user.save();
 
-    console.log(`Lien de reset : http://localhost:3001/reset-password/${resetToken}`);
+    const resetLink = `http://localhost:3001/reset-password/${resetToken}`; // ✅ lien complet
+    await sendResetEmail(user.email, resetLink); // ✅ on envoie le lien complet
 
     res.json({ message: "Email de réinitialisation envoyé" });
   } catch (err) {
-    console.error("Erreur dans /forgot-password:", err); // Ajouté
+    console.error("Erreur dans /forgot-password:", err);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
