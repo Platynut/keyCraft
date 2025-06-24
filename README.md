@@ -2,9 +2,33 @@
 
 ## Commandes utiles
 
-- **Installer les dépendances :**
+- **Installer les dépendances pour le Backend :**
   ```bash
   npm install express
+  ```
+  ```bash
+  npm install mongoose
+  ```
+  ```bash
+  npm install nodemailer
+  ```
+  ```bash
+  npm install dotenv
+  ```
+  ```bash
+  npm install cors
+  ```
+  ```bash
+  npm install bcrypt
+  ```
+  ```bash
+  npm install jsonwebtoken
+  ```
+  ```bash
+  npm install express-session
+  ```
+  ```bash
+  npm install mongodb
   ```
 
 - **Si problème lors de l'installation sous PowerShell :**
