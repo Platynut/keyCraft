@@ -90,16 +90,16 @@
   Connexion d'un utilisateur.
 
 - **POST /forgot-password**  
-  Demander la réinitialisation du mot de passe
+  Demander la réinitialisation du mot de passe.
 
 - **POST /reset-password**  
-   Réinitialiser le mot de passe
+   Réinitialiser le mot de passe.
 
 - **GET /profil**  
-  Obtenir les informations du profil
+  Obtenir les informations du profil.
 
 - **PUT /profil**
-  Mettre à jour les informations du profil
+  Mettre à jour les informations du profil.
 
 
 
