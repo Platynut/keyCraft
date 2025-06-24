@@ -132,7 +132,7 @@
   Obtenir les informations du profil.
 
 - **PUT /profil**
-  Mettre à jour les informations du profil.
+    Mettre à jour les informations du profil.
 
 
 
