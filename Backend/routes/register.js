@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     const newUser = new User({
       username,
       email,
-      password,   // mot de passe en clair ici, le hash sera fait par le middleware 'pre save'
+      password,  
       firstName,
       lastName,
       address
