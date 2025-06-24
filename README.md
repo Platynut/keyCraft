@@ -95,7 +95,7 @@
       address
     }
 
-  - **POST /login**  
+- **POST /login**  
   Connexion d'un utilisateur.
 
 - **POST /forgot-password**  
