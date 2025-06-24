@@ -3,42 +3,42 @@
 ## Commandes utiles
 
 - **Les différentes dépendances installées pour le backend :**
-- Express – serveur et routage
-  ```bash
-  npm install express
-  ```
-- Mongoose – gestion MongoDB avec des modèles
-  ```bash
-  npm install mongoose
-  ```
-- Nodemailer – envoi d’e-mails
-  ```bash
-  npm install nodemailer
-  ```
-- dotenv – variables d’environnement (ex: mots de passe dans .env)
-  ```bash
-  npm install dotenv
-  ```
-- CORS – autoriser les requêtes entre domaines (ex: frontend → backend)
-  ```bash
-  npm install cors
-  ```
-- bcrypt – hachage des mots de passe
-  ```bash
-  npm install bcrypt
-  ```
-- jsonwebtoken – création et vérification des tokens JWT
-  ```bash
-  npm install jsonwebtoken
-  ```
-- express-session – gestion de sessions via cookies
-  ```bash
-  npm install express-session
-  ```
-- mongodb – driver natif MongoDB
-  ```bash
-  npm install mongodb
-  ```
+  - Express – serveur et routage
+    ```bash
+    npm install express
+    ```
+  - Mongoose – gestion MongoDB avec des modèles
+    ```bash
+    npm install mongoose
+    ```
+  - Nodemailer – envoi d’e-mails
+    ```bash
+    npm install nodemailer
+    ```
+  - dotenv – variables d’environnement (ex: mots de passe dans .env)
+    ```bash
+    npm install dotenv
+    ```
+  - CORS – autoriser les requêtes entre domaines (ex: frontend → backend)
+    ```bash
+    npm install cors
+    ```
+  - bcrypt – hachage des mots de passe
+    ```bash
+    npm install bcrypt
+    ```
+  - jsonwebtoken – création et vérification des tokens JWT
+    ```bash
+    npm install jsonwebtoken
+    ```
+  - express-session – gestion de sessions via cookies
+    ```bash
+    npm install express-session
+    ```
+  - mongodb – driver natif MongoDB
+    ```bash
+    npm install mongodb
+    ```
 
 - **Si problème lors de l'installation sous PowerShell :**
   ```powershell
