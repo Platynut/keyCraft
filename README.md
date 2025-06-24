@@ -85,15 +85,6 @@
 
 - **POST /register**  
   Ajoute un utilisateur.
-  Exemple de body :
-    {
-      username,
-      email,
-      password,  
-      firstName,
-      lastName,
-      address
-    }
 
 - **POST /login**  
   Connexion d'un utilisateur.
