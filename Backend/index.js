@@ -14,6 +14,8 @@ app.use('/register', require('./routes/register'));
 app.use('/profile', require('./routes/profile'));
 app.use('/forgot-password', require('./routes/forgotPassword'));
 app.use('/reset-password', require('./routes/resetPassword'));
+app.use('/admin', require('./routes/admin'));
+app.use('/admin/keyboards', require('./routes/keyboard'));
 
 // Connexion MongoDB
 mongoose.connect(process.env.MONGO_URI, {
