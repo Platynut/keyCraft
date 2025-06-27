@@ -74,7 +74,7 @@ function Register() {
         <input type="text" name="firstName" placeholder="Prénom" value={formData.firstName} onChange={handleChange} required /><br />
         <input type="text" name="lastName" placeholder="Nom" value={formData.lastName} onChange={handleChange} required /><br />
         <input type="text" name="street" placeholder="Rue" value={formData.street} onChange={handleChange} required /><br />
-        <input type="number" name="number" placeholder="Numéro" value={formData.number} onChange={handleChange} required /><br />
+        <input type="text" name="number" placeholder="Numéro" value={formData.number} onChange={handleChange} required /><br />
         <input type="text" name="city" placeholder="Ville" value={formData.city} onChange={handleChange} required /><br />
         <input type="text" name="postalCode" placeholder="Code postal" value={formData.postalCode} onChange={handleChange} required /><br />
         <button type="submit">S’inscrire</button>
