@@ -7,6 +7,15 @@ import AdminDashboard from './pages/AdminPage/Admin/admin.jsx';
 import KeyboardDashboard from './pages/AdminPage/Keyboards/keyboard.jsx'
 import ResetPassword from './pages/Auth/ResetPasswordPage/ResetPasswordPage.jsx'; // Attention à la casse !
 
+
+import Accueil from "./components/Accueil";
+import Best_Seller from "./components/Best_Seller";
+import Configuration from "./components/Configuration";
+import Keycaps from "./components/Keycaps";
+import Profile from "./components/Profile";
+import Creation_compte from "./components/Creation_compte";
+import Page_paiement from "./components/Page_paiement";
+
 function App() {
   const navigate = useNavigate();
 
@@ -16,6 +25,15 @@ function App() {
 
   return (
     <Routes>
+
+      <Route path="/" element={<Accueil />} />
+      <Route path="/Best_Seller" element={<Best_Seller />} />
+      <Route path="/Configuration" element={<Configuration />} />
+      <Route path="/Keycaps" element={<Keycaps />} />
+      <Route path="/Profile" element={<Profile />} />
+      <Route path="/Creation_compte" element={<Creation_compte />} />
+      <Route path="/Page_paiement" element={<Page_paiement />} />
+
       <Route path="/login" element={<Login onLogin={handleLogin} />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
