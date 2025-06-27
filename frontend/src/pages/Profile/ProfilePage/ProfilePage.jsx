@@ -116,7 +116,7 @@ function Profile() {
         <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Prénom" required />
         <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Nom" required />
         <input type="text" name="street" value={formData.street} onChange={handleChange} placeholder="Rue" required />
-        <input type="number" name="number" value={formData.number} onChange={handleChange} placeholder="Numéro" required />
+        <input type="text" name="number" value={formData.number} onChange={handleChange} placeholder="Numéro" required />
         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Ville" required />
         <input type="text" name="postalCode" value={formData.postalCode} onChange={handleChange} placeholder="Code Postal" required />
         <button type="submit">Mettre à jour</button>
