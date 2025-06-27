@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "name": "GMK Red Samurai",
+        "url": "https://m.media-amazon.com/images/I/61pUF1ax-nL._UF1000,1000_QL80_.jpg",
+        "profile": "Cherry",
+        "material": "ABS",
+        "layout": "ANSI",
+        "colorway": "Red/Black",
+        "shine_through": false,
+        "price": 120.00,
+        "stock": 10,
+        "rating": 4.8
+    },
+    {
+        "id": 2,
+        "name": "ePBT Grand Tour",
+        "url": "https://cdn.candykeys.com/public/1830/responsive-images/0___media_library_original_658_370.jpeg",
+        "profile": "Cherry",
+        "material": "PBT",
+        "layout": "ISO",
+        "colorway": "Orange/White",
+        "shine_through": false,
+        "price": 100.00,
+        "stock": 7,
+        "rating": 4.5
+    },
+    {
+        "id": 3,
+        "name": "Domikey Dolch",
+        "url": "https://domikey.com/cdn/shop/products/02_81c6e51c-2dd4-4412-b512-0b70603308b6_1800x1800.jpg?v=1656735488",
+        "profile": "SA",
+        "material": "ABS",
+        "layout": "ANSI",
+        "colorway": "Gray/Black",
+        "shine_through": false,
+        "price": 130.00,
+        "stock": 5,
+        "rating": 4.7
+    },
+    {
+        "id": 4,
+        "name": "Pudding Keycaps",
+        "url": "https://boutique-keycaps.com/cdn/shop/products/OEM-PBT-Pudding-keycaps_800x.jpg?v=1648408789",
+        "profile": "OEM",
+        "material": "PBT",
+        "layout": "ANSI",
+        "colorway": "Black/Translucent",
+        "shine_through": true,
+        "price": 30.00,
+        "stock": 20,
+        "rating": 4.2
+    }
+]

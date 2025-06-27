@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Keychron Q1",
+    "url": "https://keychron.fr/cdn/shop/products/Keychron-Q1-black.jpg?v=1750842829&width=900",
     "marque": "Keychron",
     "type": "Custom",
     "switches": "Gateron G Pro Red",
@@ -15,7 +16,8 @@
   },
   {
     "id": 2,
-    "name": "Logitech G Pro X",
+    "name": "Logitech G Pro X TKL",
+    "url": "",
     "marque": "Logitech",
     "type": "Gaming",
     "switches": "GX Blue",
@@ -30,6 +32,7 @@
   {
     "id": 3,
     "name": "Akko 3068B Plus",
+    "url": "",
     "marque": "Akko",
     "type": "Custom",
     "switches": "Akko CS Jelly Pink",
@@ -44,6 +47,7 @@
   {
     "id": 4,
     "name": "Razer Huntsman Mini",
+    "url": "",
     "marque": "Razer",
     "type": "Gaming",
     "switches": "Razer Optical Red",
@@ -58,6 +62,7 @@
   {
     "id": 5,
     "name": "Ducky One 3 SF",
+    "url": "",
     "marque": "Ducky",
     "type": "Gaming",
     "switches": "Cherry MX Brown",
@@ -72,6 +77,7 @@
   {
     "id": 6,
     "name": "GMK67",
+    "url": "",
     "marque": "Skyloong",
     "type": "Custom",
     "switches": "Kailh Box White",
@@ -86,6 +92,7 @@
   {
     "id": 7,
     "name": "Anne Pro 2",
+    "url": "",
     "marque": "Obinslab",
     "type": "Gaming",
     "switches": "Gateron Brown",
@@ -100,6 +107,7 @@
   {
     "id": 8,
     "name": "Glorious GMMK Pro",
+    "url": "",
     "marque": "Glorious",
     "type": "Custom",
     "switches": "Barebone (no switches)",
@@ -114,6 +122,7 @@
   {
     "id": 9,
     "name": "SteelSeries Apex Pro TKL",
+    "url": "",
     "marque": "SteelSeries",
     "type": "Gaming",
     "switches": "OmniPoint Adjustable",
@@ -128,6 +137,7 @@
   {
     "id": 10,
     "name": "Royal Kludge RK84",
+    "url": "",
     "marque": "Royal Kludge",
     "type": "Custom",
     "switches": "RK Red",
@@ -142,6 +152,7 @@
   {
     "id": 11,
     "name": "Corsair K70 RGB MK.2",
+    "url": "",
     "marque": "Corsair",
     "type": "Gaming",
     "switches": "Cherry MX Red",
@@ -156,6 +167,7 @@
   {
     "id": 12,
     "name": "Epomaker TH80",
+    "url": "",
     "marque": "Epomaker",
     "type": "Custom",
     "switches": "Gateron Pro Yellow",
