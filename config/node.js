@@ -5,18 +5,22 @@ const port = 8080;
 
 app.use(express.json());
 
-function loadJsonFile(){
-    const raw = fs.readFileSync(__dirname + '/../ressources/clavier.json', 'utf-8');
+/** LOADERS **/
+
+function loadJsonFile(filename) {
+    const raw = fs.readFileSync(__dirname + `/../ressources/${filename}`, 'utf-8');
     return JSON.parse(raw);
 }
 
+/** KEYBOARD API **/
+
 app.get('/keyboard', (req, res) => {
     try {
-        const config = loadJsonFile();
+        const config = loadJsonFile('clavier.json');
         const {minRating, maxRating, minPrice, maxPrice, ...filters } = req.query;
 
         const keyboardConfig = config.filter(item =>
-            Object.entries(filters).every(([key, value]) => item[key] === value)
+            Object.entries(filters).every(([key, value]) => item[key] == value)
             && (minPrice ? item.price >= parseFloat(minPrice) : true)
             && (maxPrice ? item.price <= parseFloat(maxPrice) : true)
             && (minRating ? item.rating >= parseFloat(minRating) : true)
@@ -32,7 +36,7 @@ app.get('/keyboard', (req, res) => {
 
 app.get('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile();
+        const config = loadJsonFile('clavier.json');
         const keyboard = config.find(item => item.id.toString() === req.params.id.toString());
 
         if (!keyboard) {
@@ -47,31 +51,27 @@ app.get('/keyboard/:id', (req, res) => {
 
 app.post('/keyboard', (req, res) => {
     try {
-        const config = loadJsonFile();
+        const config = loadJsonFile('clavier.json');
         const newKeyboard = req.body;
 
-        const validation = validateFields(newKeyboard);
+        const validation = validateFields(newKeyboard, 'keyboard');
         if (!validation.valid) {
             return res.status(400).json({ error: validation.error });
         }
 
-        const requiredFields = ['name', 'marque', 'type', 'switches', 'layout', 'wireless', 'rgb', 'hot_swappable', 'price', 'stock'];
+        const requiredFields = ['name', 'image_url', 'marque', 'type', 'switches', 'layout', 'wireless', 'rgb', 'hot_swappable', 'price', 'stock'];
         const missing = requiredFields.some(field => !newKeyboard[field]);
-        if (!newKeyboard || missing) {
+        if (missing) {
             return res.status(400).json({ error: 'Invalid keyboard data' });
-        } else {
-            const maxId = config.length > 0 ? Math.max(...config.map(item => Number(item.id))) : 0;
-            newKeyboard.id = maxId + 1;
-            newKeyboard.rating = newKeyboard.rating || null;
-
-            const { id, ...rest } = newKeyboard;
-            const keyboardToSave = { id, ...rest };
-
-            config.push(keyboardToSave);
-
-            fs.writeFileSync(__dirname + '/../ressources/clavier.json', JSON.stringify(config, null, 4));
-            res.status(201).json(newKeyboard);
         }
+
+        const maxId = config.length > 0 ? Math.max(...config.map(item => Number(item.id))) : 0;
+        newKeyboard.id = maxId + 1;
+        newKeyboard.rating = newKeyboard.rating || null;
+
+        config.push(newKeyboard);
+        fs.writeFileSync(__dirname + '/../ressources/clavier.json', JSON.stringify(config, null, 4));
+        res.status(201).json(newKeyboard);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create keyboard' });
     }
@@ -79,17 +79,17 @@ app.post('/keyboard', (req, res) => {
 
 app.patch('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile();
+        const config = loadJsonFile('clavier.json');
         const keyboardIndex = config.findIndex(item => item.id.toString() === req.params.id.toString());
+        if (keyboardIndex === -1) return res.status(404).json({ error: 'Keyboard not found' });
 
-        const updatedKeyboard = { ...config[keyboardIndex], ...req.body};
-        config[keyboardIndex] = updatedKeyboard;
-
-        const validation = validateFields(req.body, false);
+        const updatedKeyboard = { ...config[keyboardIndex], ...req.body };
+        const validation = validateFields(req.body, 'keyboard', false);
         if (!validation.valid) {
             return res.status(400).json({ error: validation.error });
         }
 
+        config[keyboardIndex] = updatedKeyboard;
         fs.writeFileSync(__dirname + '/../ressources/clavier.json', JSON.stringify(config, null, 4));
         res.json(updatedKeyboard);
     } catch (error) {
@@ -99,7 +99,7 @@ app.patch('/keyboard/:id', (req, res) => {
 
 app.delete('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile();
+        const config = loadJsonFile('clavier.json');
         const keyboardIndex = config.findIndex(item => item.id.toString() === req.params.id.toString());
 
         if (keyboardIndex === -1) {
@@ -114,100 +114,159 @@ app.delete('/keyboard/:id', (req, res) => {
     }
 });
 
-app.get('/marques', (req, res) => {
+/** KEYCAPS API **/
+
+app.get('/keycaps', (req, res) => {
     try {
-        const config = loadJsonFile();
-        const marques = [...new Set(config.map(item => item.marque))].sort();
-        res.json(marques);
+        const config = loadJsonFile('keycaps.json');
+        const {minRating, maxRating, minPrice, maxPrice, ...filters } = req.query;
+
+        const filtered = config.filter(item =>
+            Object.entries(filters).every(([key, value]) => item[key] == value)
+            && (minPrice ? item.price >= parseFloat(minPrice) : true)
+            && (maxPrice ? item.price <= parseFloat(maxPrice) : true)
+            && (minRating ? item.rating >= parseFloat(minRating) : true)
+            && (maxRating ? item.rating <= parseFloat(maxRating) : true)
+        );
+
+        res.json(filtered);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to load brands' });
+        res.status(500).json({ error: 'Failed to load keycaps' });
     }
 });
 
-app.post('/order', (req, res) => {
+app.get('/keycaps/:id', (req, res) => {
     try {
-        const order = req.body;
+        const config = loadJsonFile('keycaps.json');
+        const keycaps = config.find(item => item.id.toString() === req.params.id.toString());
 
-        if (!order || !Array.isArray(order.items) || order.items.length === 0) {
-            return res.status(400).json({ error: 'Invalid order data' });
+        if (!keycaps) {
+            return res.status(404).json({ error: 'Keycaps not found' });
         }
 
-        const keyboards = loadJsonFile();
-        let totalPrice = 0;
-        const orderDetails = order.items.map(item => {
-            if (!item.id || !item.quantity) {
-                throw new Error('Invalid item in order');
-            }
-            const keyboard = keyboards.find(k => k.id.toString() === item.id.toString());
-            if (!keyboard) {
-                throw new Error(`Keyboard with id ${item.id} not found`);
-            }
-            totalPrice += keyboard.price * item.quantity;
-            return {
-                id: keyboard.id,
-                name: keyboard.name,
-                quantity: item.quantity,
-                price: keyboard.price
-            };
-        });
-
-        const ordersPath = __dirname + '/../ressources/orders.json';
-        let orders = [];
-        if (fs.existsSync(ordersPath)) {
-            orders = JSON.parse(fs.readFileSync(ordersPath, 'utf-8'));
-        }
-
-        const newOrder = {
-            id: orders.length > 0 ? orders[orders.length - 1].id + 1 : 1,
-            items: orderDetails,
-            totalPrice,
-            status: "en attente",
-            date: new Date().toISOString()
-        };
-
-        orders.push(newOrder);
-        fs.writeFileSync(ordersPath, JSON.stringify(orders, null, 4));
-
-        res.status(201).json({ message: 'Order placed successfully', order: newOrder });
+        res.json(keycaps);
     } catch (error) {
-        res.status(500).json({ error: `Failed to place order: ${error.message}` });
+        res.status(500).json({ error: `Failed to get keycaps ${req.params.id}` });
     }
 });
+
+app.post('/keycaps', (req, res) => {
+    try {
+        const config = loadJsonFile('keycaps.json');
+        const newKeycaps = req.body;
+
+        const validation = validateFields(newKeycaps, 'keycaps');
+        if (!validation.valid) {
+            return res.status(400).json({ error: validation.error });
+        }
+
+        const requiredFields = ['name', 'image_url', 'profile', 'material', 'layout', 'shine_through', 'price', 'stock'];
+        const missing = requiredFields.some(field => !newKeycaps[field] && newKeycaps[field] !== false);
+        if (missing) {
+            return res.status(400).json({ error: 'Invalid keycaps data' });
+        }
+
+        const maxId = config.length > 0 ? Math.max(...config.map(item => Number(item.id))) : 0;
+        newKeycaps.id = maxId + 1;
+        newKeycaps.rating = newKeycaps.rating || null;
+
+        config.push(newKeycaps);
+        fs.writeFileSync(__dirname + '/../ressources/keycaps.json', JSON.stringify(config, null, 4));
+        res.status(201).json(newKeycaps);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create keycaps' });
+    }
+});
+
+app.patch('/keycaps/:id', (req, res) => {
+    try {
+        const config = loadJsonFile('keycaps.json');
+        const keycapsIndex = config.findIndex(item => item.id.toString() === req.params.id.toString());
+        if (keycapsIndex === -1) return res.status(404).json({ error: 'Keycaps not found' });
+
+        const updated = { ...config[keycapsIndex], ...req.body };
+        const validation = validateFields(req.body, 'keycaps', false);
+        if (!validation.valid) {
+            return res.status(400).json({ error: validation.error });
+        }
+
+        config[keycapsIndex] = updated;
+        fs.writeFileSync(__dirname + '/../ressources/keycaps.json', JSON.stringify(config, null, 4));
+        res.json(updated);
+    } catch (error) {
+        res.status(500).json({ error: `Failed to update keycaps ${req.params.id}` });
+    }
+});
+
+app.delete('/keycaps/:id', (req, res) => {
+    try {
+        const config = loadJsonFile('keycaps.json');
+        const index = config.findIndex(item => item.id.toString() === req.params.id.toString());
+
+        if (index === -1) {
+            return res.status(404).json({ error: 'Keycaps not found' });
+        }
+
+        const deleted = config.splice(index, 1)[0];
+        fs.writeFileSync(__dirname + '/../ressources/keycaps.json', JSON.stringify(config, null, 4));
+        res.status(200).json({ message: `Keycaps supprimés avec succès`, keycaps: deleted });
+    } catch (error) {
+        res.status(500).json({ error: `Failed to delete keycaps ${req.params.id}` });
+    }
+});
+
+/** VALIDATION **/
+
+function validateFields(data, type, required = true) {
+    const base = {
+        name: 'string',
+        image_url: 'string',
+        layout: 'string',
+        price: 'number',
+        stock: 'number',
+        rating: ['number', 'undefined', 'object']
+    };
+
+    const keyboardSchema = {
+        ...base,
+        marque: 'string',
+        type: 'string',
+        switches: 'string',
+        wireless: 'boolean',
+        rgb: 'boolean',
+        hot_swappable: 'boolean'
+    };
+
+    const keycapsSchema = {
+        ...base,
+        profile: 'string',
+        material: 'string',
+        shine_through: 'boolean',
+        colorway: 'string'
+    };
+
+    const schema = type === 'keyboard' ? keyboardSchema : keycapsSchema;
+
+    for (const key in schema) {
+        if (required && !(key in data)) {
+            return { valid: false, error: `Le champ "${key}" est requis.` };
+        }
+        if (key in data) {
+            if (Array.isArray(schema[key])) {
+                if (!schema[key].includes(typeof data[key])) {
+                    return { valid: false, error: `Le champ ${key} doit être de type ${schema[key].join('/')} (reçu: ${typeof data[key]})` };
+                }
+            } else {
+                if (typeof data[key] !== schema[key]) {
+                    return { valid: false, error: `Le champ ${key} doit être de type ${schema[key]} (reçu: ${typeof data[key]})` };
+                }
+            }
+        }
+    }
+
+    return { valid: true };
+}
 
 app.listen(port, () => {
     console.log(`Serveur lancé sur http://localhost:${port}`);
 });
-
-function validateFields(keyboard, required = true) {
-    const schema = {
-        name: 'string',
-        marque: 'string',
-        type: 'string',
-        switches: 'string',
-        layout: 'string',
-        wireless: 'boolean',
-        rgb: 'boolean',
-        hot_swappable: 'boolean',
-        price: 'number',
-        stock: 'number',
-        rating: ['number', 'object', 'undefined'] 
-    };
-
-    for (const key in schema) {
-        if (required && !(key in keyboard)) {
-            return { valid: false, error: `Le champ "${key}" est requis.` };
-        }
-        if (key in keyboard) {
-            if (Array.isArray(schema[key])) {
-                if (!schema[key].includes(typeof keyboard[key])) {
-                    return { valid: false, error: `Le champ ${key} doit être de type ${schema[key].join('/')} (reçu: ${typeof keyboard[key]})` };
-                }
-            } else {
-                if (typeof keyboard[key] !== schema[key]) {
-                    return { valid: false, error: `Le champ ${key} doit être de type ${schema[key]} (reçu: ${typeof keyboard[key]})` };
-                }
-            }
-        }
-    }
-    return { valid: true };
-}
