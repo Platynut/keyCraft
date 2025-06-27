@@ -10,6 +10,7 @@ function Register() {
     lastName: '',
     street: '',
     number: '',
+    line2: '',
     city: '',
     postalCode: '',
   });
@@ -36,6 +37,7 @@ function Register() {
       address: {
         street: formData.street,
         number: parseInt(formData.number, 10),
+        line2: formData.line2,
         city: formData.city,
         postalCode: formData.postalCode,
       },
@@ -75,6 +77,7 @@ function Register() {
         <input type="text" name="lastName" placeholder="Nom" value={formData.lastName} onChange={handleChange} required /><br />
         <input type="text" name="street" placeholder="Rue" value={formData.street} onChange={handleChange} required /><br />
         <input type="text" name="number" placeholder="Numéro" value={formData.number} onChange={handleChange} required /><br />
+        <input type="text" name="line2" placeholder="complément d'adresse (optionnel)" value={formData.line2} onChange={handleChange} /><br />
         <input type="text" name="city" placeholder="Ville" value={formData.city} onChange={handleChange} required /><br />
         <input type="text" name="postalCode" placeholder="Code postal" value={formData.postalCode} onChange={handleChange} required /><br />
         <button type="submit">S’inscrire</button>

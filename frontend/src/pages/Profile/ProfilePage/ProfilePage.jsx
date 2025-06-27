@@ -12,6 +12,7 @@ function Profile() {
     lastName: '',
     street: '',
     number: '',
+    line2: '',
     city: '',
     postalCode: '',
   });
@@ -40,6 +41,7 @@ function Profile() {
             lastName: data.lastName,
             street: data.address.street,
             number: data.address.number,
+            line2: data.address.line2 || '',
             city: data.address.city,
             postalCode: data.address.postalCode,
           });
@@ -68,6 +70,7 @@ function Profile() {
       address: {
         street: formData.street,
         number: parseInt(formData.number),
+        line2: formData.line2,
         city: formData.city,
         postalCode: formData.postalCode,
       },
@@ -117,6 +120,7 @@ function Profile() {
         <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Nom" required />
         <input type="text" name="street" value={formData.street} onChange={handleChange} placeholder="Rue" required />
         <input type="text" name="number" value={formData.number} onChange={handleChange} placeholder="Numéro" required />
+        <input type="text" name="line2" value={formData.line2} onChange={handleChange} placeholder="complément d'adresse (optionnel)" />
         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Ville" required />
         <input type="text" name="postalCode" value={formData.postalCode} onChange={handleChange} placeholder="Code Postal" required />
         <button type="submit">Mettre à jour</button>

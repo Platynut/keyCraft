@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   address: {
     street: { type: String, required: true },
     number: { type: String, required: true },
+    line2: { type: String },
     city: { type: String, required: true },
     postalCode: { type: String, required: true }
   },
