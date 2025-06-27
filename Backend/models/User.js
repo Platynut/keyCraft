@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   address: {
     street: { type: String, required: true },
-    number: { type: Number, required: true },
+    number: { type: String, required: true },
     city: { type: String, required: true },
     postalCode: { type: String, required: true }
   },
