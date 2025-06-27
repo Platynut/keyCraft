@@ -13,7 +13,6 @@ const Accueil = () => {
       <Annonce />
       <div className="main">
         <Collection />
-        <Collection />
       </div>
       <Footer />
     </div>

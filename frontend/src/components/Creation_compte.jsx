@@ -17,7 +17,7 @@ const Creation_compte = () => {
                     <input className="inputbox" type="password" id="password" name="password" required />
                     <br />
                     <button className="button" type="submit">Créer</button>
-                    <div><p>Vous avez déjà un compte ?</p> <Link to="/Profile"><button className="button" type="button">Se connecter</button></Link></div>
+                    <div><p>Vous avez déjà un compte ?</p> <Link to="/AcceuilProfile"><button className="button" type="button">Se connecter</button></Link></div>
                 </form>
             </div>
             </div>

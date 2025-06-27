@@ -17,7 +17,7 @@ function Profile() {
     postalCode: '',
   });
 
-  // 🔐 Vérifie le token et charge les données utilisateur
+  // Vérifie le token et charge les données utilisateur
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -53,13 +53,13 @@ function Profile() {
       });
   }, [navigate]);
 
-  // 📝 Mise à jour des champs
+  // Mise à jour des champs
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // 📤 Mise à jour du profil
+  // Mise à jour du profil
   const handleUpdate = async e => {
     e.preventDefault();
     const token = localStorage.getItem('token');
