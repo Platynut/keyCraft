@@ -3,6 +3,7 @@
 ## Commandes utiles
 
 - **Les différentes dépendances installées pour le backend :**
+
   - Express – serveur et routage
     ```bash
     npm install express
@@ -41,16 +42,19 @@
     ```
 
 - **Si problème lors de l'installation sous PowerShell :**
+
   ```powershell
   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
   ```
 
 - **Lancer le serveur :**
+
   ```bash
   node config/node.js
   ```
 
 - **Installer le rechargement automatique (nodemon) :**
+
   ```bash
   npm install -g nodemon
   ```
@@ -71,6 +75,7 @@
 - **POST /keyboard**  
   Ajoute un clavier.  
   Exemple de body :
+
   ```json
   {
     "name": "Epomaker TH80",
@@ -89,6 +94,7 @@
 - **PATCH /keyboard/:id**  
   Modifie un ou plusieurs champs d’un clavier existant.  
   Exemple :
+
   ```json
   {
     "price": 10.0
@@ -132,7 +138,4 @@
   Obtenir les informations du profil.
 
 - **PUT /profil**
-    Mettre à jour les informations du profil.
-
-
-
+  Mettre à jour les informations du profil.
