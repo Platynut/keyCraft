@@ -3,7 +3,7 @@ import '../../../styles/globals.css';
 import { Link } from 'react-router-dom';
 
 function Login({ onLogin }) {
-  const [email, setEmail] = useState('');
+  const [emailOrusername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
@@ -14,7 +14,7 @@ function Login({ onLogin }) {
       const res = await fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ emailOrusername, password }),
       });
 
       const data = await res.json();
@@ -37,10 +37,10 @@ function Login({ onLogin }) {
       {message && <p>{message}</p>}
       <form onSubmit={handleLogin}>
         <input
-          type="email"
-          value={email}
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          value={emailOrusername}
+          placeholder="Email ou pseudo"
+          onChange={(e) => setEmailOrUsername(e.target.value)}
           required
         /><br />
         <input
@@ -56,7 +56,7 @@ function Login({ onLogin }) {
         <Link to="/forgot-password" style={{ color: '#66ccff', textDecoration: 'underline' }}>
           Mot de passe oublié ?
         </Link>
-        </p>
+      </p>
     </div>
   );
 }

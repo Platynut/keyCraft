@@ -7,33 +7,35 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { emailOrusername, password } = req.body;
 
     // Vérification des champs requis
-    if (!email || !password) {
+    if (!emailOrusername || !password) {
       return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
 
-    // Recherche de l'utilisateur par email
-    const user = await User.findOne({ email });
+    // Recherche de l'utilisateur par email OU pseudo
+    const user = await User.findOne({
+      $or: [{ email: emailOrusername }, { username: emailOrusername }]
+    });
+
     if (!user) {
-      return res.status(400).json({ message: 'Email introuvable.' });
+      return res.status(400).json({ message: 'Identifiant introuvable.' });
     }
 
     // Vérification du mot de passe avec bcrypt
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Erreur de mdp.' });
+      return res.status(400).json({ message: 'Mot de passe incorrect.' });
     }
 
-    // Création du token JWT (optionnel)
+    // Création du token JWT
     const token = jwt.sign(
       { userId: user._id, email: user.email, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Réponse avec message et token
     return res.json({ message: 'Connexion réussie !', token });
 
   } catch (error) {
