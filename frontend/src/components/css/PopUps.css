@@ -1,0 +1,31 @@
+.panier_qte_btn {
+  background: #23242a;
+  color: #fff;
+  border: 1px solid #4e9cff;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.panier_qte_btn:hover {
+  background: #4e9cff;
+  color: #fff;
+}
+
+.panier_qte_group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 4px 0 8px 0;
+}
+
+@media (max-width: 600px) {
+  .panier_qte_group {
+    justify-content: center;
+  }
+}

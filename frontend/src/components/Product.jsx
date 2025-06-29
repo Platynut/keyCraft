@@ -5,7 +5,7 @@ function Product ({img, title, prix, rating}) {
             <img src={img} alt="" />
             <div className="productinfo">
                 <div className="producttitle">{title}</div>
-                <div className="productprix">{prix}</div>
+                <div className="productprix">{prix}€</div>
                 <div className="rating">{rating}</div>
             </div>
         </div>

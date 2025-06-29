@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Headers from '../../../components/Header';
 import '../../../styles/globals.css';
 import styles from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +24,7 @@ function Login({ onLogin }) {
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('idclient', data.user._id);
         setMessage('Connexion réussie');
         onLogin(); // appelle la fonction passée en prop
       } else {
@@ -39,6 +41,8 @@ function Login({ onLogin }) {
   };
 
   return (
+    <>
+    <Headers />
     <div className={styles.container}>
       <h2>Connexion</h2>
       {message && <p>{message}</p>}
@@ -66,6 +70,7 @@ function Login({ onLogin }) {
         </Link>
       </p>
     </div>
+    </>
   );
 }
 

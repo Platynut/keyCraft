@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Headers from '../../../components/Header';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -27,6 +28,8 @@ function ForgotPassword() {
   };
 
   return (
+    <>
+    <Headers />
     <div>
       <h2>Mot de passe oublié</h2>
       {message && <p>{message}</p>}
@@ -41,6 +44,7 @@ function ForgotPassword() {
         <button type="submit">Envoyer</button>
       </form>
     </div>
+    </>
   );
 }
 

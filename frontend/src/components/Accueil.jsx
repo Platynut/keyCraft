@@ -14,7 +14,6 @@ const Accueil = () => {
       <div className="main">
         <Collection />
       </div>
-      <Footer />
     </div>
   );
 }

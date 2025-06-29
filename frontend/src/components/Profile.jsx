@@ -21,10 +21,6 @@ const AcceuilProfile = () => {
                 </form>
             </div>
             </div>
-
-
-
-            <Footer />
         </div>
     );
 }

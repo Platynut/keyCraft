@@ -1,0 +1,120 @@
+.formContainer {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #23242a;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 32px 24px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.formContainer h1 {
+  color: #66ccff;
+  font-size: 2rem;
+  margin-bottom: 18px;
+}
+.formContainer form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.formContainer input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #18191d;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+.formContainer button {
+  background: linear-gradient(90deg, #66ccff 0%, #4e9cff 100%);
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  margin-top: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.formContainer button[type="button"] {
+  background: #444;
+  color: #fff;
+  margin-top: 0;
+}
+.formContainer p {
+  color: #e0e0e0;
+  margin-bottom: 0;
+}
+.ordersContainer {
+  width: 85%;
+  max-width: 85%;
+  margin: 40px auto;
+  background: #23242a;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 32px 4vw 28px 4vw;
+}
+.ordersContainer h2 {
+  color: #66ccff;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+}
+.ordersContainer ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.ordersContainer li {
+  list-style: none;
+}
+.orderItem {
+  background: #18191d;
+  color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 12px;
+}
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+.cancelButton {
+  background: #ff5c5c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.cancelButton:hover {
+  background: #e04a4a;
+}
+.orderStatus {
+  color: #66ccff;
+  font-weight: 600;
+}
+.orderItemsList {
+  margin: 8px 0 0 0;
+  padding-left: 18px;
+}
+
+
+@media (max-width: 600px) {
+  .formContainer {
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+  }
+  .ordersContainer {
+    padding: 18px 0 18px 0;
+  }
+}

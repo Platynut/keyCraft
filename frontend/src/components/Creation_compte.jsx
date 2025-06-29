@@ -21,7 +21,6 @@ const Creation_compte = () => {
                 </form>
             </div>
             </div>
-            <Footer />
         </div>
     );
 }
