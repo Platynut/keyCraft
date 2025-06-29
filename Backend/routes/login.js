@@ -36,7 +36,15 @@ router.post('/', async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    return res.json({ message: 'Connexion réussie !', token });
+    return res.json({
+      message: 'Connexion réussie !',
+      token,
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email
+      }
+    });
 
   } catch (error) {
     console.error('Erreur lors de la connexion:', error);

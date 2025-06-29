@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../../components/Header';
+import styles from './ProfilePage.module.css';
 import '../../../styles/globals.css';
 
 function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('');
+  const [orders, setOrders] = useState([]);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -17,7 +20,7 @@ function Profile() {
     postalCode: '',
   });
 
-  // 🔐 Vérifie le token et charge les données utilisateur
+  // Vérifie le token et charge les données utilisateur
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -53,13 +56,26 @@ function Profile() {
       });
   }, [navigate]);
 
-  // 📝 Mise à jour des champs
+  // Récupère les commandes de l'utilisateur connecté
+  useEffect(() => {
+    const idclient = localStorage.getItem('idclient');
+    if (!idclient) return;
+    fetch('http://localhost:3080/order')
+      .then(res => res.json())
+      .then(data => {
+        const userOrders = data.filter(order => order.idclient === idclient);
+        setOrders(userOrders);
+      })
+      .catch(() => setOrders([]));
+  }, []);
+
+  // Mise à jour des champs
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // 📤 Mise à jour du profil
+  // Mise à jour du profil
   const handleUpdate = async e => {
     e.preventDefault();
     const token = localStorage.getItem('token');
@@ -105,29 +121,69 @@ function Profile() {
     navigate('/login');
   };
 
-    const ResetPassword = () => {
+  const ResetPassword = () => {
     navigate('/forgot-password');
+  };
+
+  // Annulation d'une commande
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm('Voulez-vous vraiment annuler cette commande ?')) return;
+    try {
+      const res = await fetch(`http://localhost:3080/order/${orderId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setOrders(orders => orders.filter(order => order.id !== orderId));
+      } else {
+        alert('Erreur lors de l\'annulation.');
+      }
+    } catch (e) {
+      alert('Erreur lors de l\'annulation.');
+    }
   };
 
   if (!user) return <p>Chargement...</p>;
 
   return (
-    <div className="form-container">
-      <h1>Mon profil</h1>
-      {message && <p>{message}</p>}
-      <form onSubmit={handleUpdate}>
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Prénom" required />
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Nom" required />
-        <input type="text" name="street" value={formData.street} onChange={handleChange} placeholder="Rue" required />
-        <input type="text" name="number" value={formData.number} onChange={handleChange} placeholder="Numéro" required />
-        <input type="text" name="line2" value={formData.line2} onChange={handleChange} placeholder="complément d'adresse (optionnel)" />
-        <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Ville" required />
-        <input type="text" name="postalCode" value={formData.postalCode} onChange={handleChange} placeholder="Code Postal" required />
-        <button type="submit">Mettre à jour</button>
-        <button type="button" onClick={handleLogout}>Déconnexion</button>
-        <button type="button" onClick={ResetPassword}>Modifier Mot de Passe</button>
-      </form>
-    </div>
+    <>
+      <Header />
+      <div className={styles.formContainer}>
+        <h1>Mon profil</h1>
+        {message && <p>{message}</p>}
+        <form onSubmit={handleUpdate}>
+          <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Prénom" required />
+          <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Nom" required />
+          <input type="text" name="street" value={formData.street} onChange={handleChange} placeholder="Rue" required />
+          <input type="text" name="number" value={formData.number} onChange={handleChange} placeholder="Numéro" required />
+          <input type="text" name="line2" value={formData.line2} onChange={handleChange} placeholder="complément d'adresse (optionnel)" />
+          <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="Ville" required />
+          <input type="text" name="postalCode" value={formData.postalCode} onChange={handleChange} placeholder="Code Postal" required />
+          <button type="submit">Mettre à jour</button>
+          <button type="button" onClick={handleLogout}>Déconnexion</button>
+          <button type="button" onClick={ResetPassword}>Modifier Mot de Passe</button>
+        </form>
+      </div>
+      <div className={styles.ordersContainer}>
+        <h2>Mes commandes</h2>
+        {orders.length === 0 ? (
+          <p>Aucune commande trouvée.</p>
+        ) : (
+          <ul style={{paddingLeft: 0}}>
+            {orders.map(order => (
+              <li key={order.id} className={styles.orderItem}>
+                <div className={styles.orderHeader}>
+                  <span><b>Commande n°{order.id}</b> - {new Date(order.date).toLocaleDateString()} - <span className={styles.orderStatus}>{order.status}</span></span>
+                  <button className={styles.cancelButton} onClick={() => handleCancelOrder(order.id)}>Annuler</button>
+                </div>
+                <ul className={styles.orderItemsList}>
+                  {(order.cart || order.items || []).map((item, idx) => (
+                    <li key={idx}>{item.name} x{item.quantity} - {item.price}€</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   );
 }
 

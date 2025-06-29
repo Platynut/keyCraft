@@ -1,32 +1,42 @@
-import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import { Link } from "react-router-dom";
-const Profile = () => {
-    return (
-        <div className="profile">
-            <Header />
-            <div className="profile-container">
-            <div className="profile-box">
-                <h1>Connexion à votre compte KeyCraft</h1>
-                <form className="profile-form">
-                    <div>Nom d'utilisateur</div> 
-                    <input className="inputbox" type="text" id="username" name="username" required />
-                    <br />
-                    <div>Mot de passe</div> 
-                    <input className="inputbox" type="password" id="password" name="password" required />
-                    <br />
-                    <button className="button" type="submit">Connexion</button>
-                    <div><p>Vous n'avez pas de compte ?</p> <Link to="/Creation_compte"><button className="button" type="button">Créer un compte</button></Link></div>
-                </form>
-            </div>
-            </div>
+import React, { useState } from "react";
 
+const PagePaiement = ({ onOrder }) => {
+  const [processing, setProcessing] = useState(false);
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const idclient = localStorage.getItem('idclient');
 
+  const handleOrder = async () => {
+    if (!idclient) {
+      alert('Vous devez être connecté pour commander.');
+      return;
+    }
+    if (!cart.length) {
+      alert('Votre panier est vide.');
+      return;
+    }
+    setProcessing(true);
+    try {
+      const response = await fetch('http://localhost:3080/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idclient, cart })
+      });
+      if (response.ok) {
+        alert('Commande passée avec succès !');
+        localStorage.removeItem('cart');
+        if (onOrder) onOrder(); // callback pour vider le panier côté parent
+      }
+    } catch (e) {
+      alert('Erreur lors de la commande.');
+    }
+    setProcessing(false);
+  };
 
-            <Footer />
-        </div>
-    );
-}
+  return (
+    <button className="button" onClick={handleOrder} disabled={processing} style={{marginTop: 8, background: '#4e9cff'}}>
+      {processing ? 'Traitement...' : 'Commander'}
+    </button>
+  );
+};
 
-export default Profile;
+export default PagePaiement;

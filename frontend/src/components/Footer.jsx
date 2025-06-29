@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Footer = () => {
     return (
-        <div className="footer-container">
+        <footer className="footer-container" role="contentinfo">
             <div className='footer-links'>
                 <div className='footer-column'>
                     <h3>Claviers</h3>
@@ -34,7 +34,7 @@ const Footer = () => {
                 </div>
             </div>
             <Link to="/" className="main-button">KeyCraft</Link>
-        </div>
+        </footer>
     );
 };
 

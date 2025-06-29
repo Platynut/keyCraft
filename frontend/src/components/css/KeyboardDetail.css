@@ -1,0 +1,142 @@
+.keyboard-detail-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 40px auto;
+  max-width: 900px;
+  background: #23242a;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 32px 24px 28px 24px;
+  gap: 36px;
+}
+.keyboard-detail-imgbox {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+}
+.keyboard-detail-img {
+  width: 340px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #18191d;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+}
+.keyboard-detail-description-block {
+  background: #22232a;
+  border-radius: 10px;
+  padding: 18px 18px 12px 18px;
+  margin-top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 240px;
+  max-width: 340px;
+}
+.keyboard-detail-description-block h3 {
+  color: #66ccff;
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+  text-align: left;
+}
+.keyboard-detail-description {
+  color: #e0e0e0;
+  font-size: 1.08rem;
+  text-align: justify;
+  margin-bottom: 0;
+}
+.keyboard-detail-info {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.keyboard-detail-title {
+  font-size: 2.1rem;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: left;
+}
+.keyboard-detail-price {
+  font-size: 1.5rem;
+  color: #66ccff;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.keyboard-detail-rating {
+  color: #ffd700;
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+.keyboard-detail-stock {
+  font-size: 1.08rem;
+  color: #7fff7f;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.keyboard-detail-stock.out {
+  color: #ff5c5c;
+}
+.keyboard-detail-addcart {
+  background: linear-gradient(90deg, #66ccff 0%, #4e9cff 100%);
+  color: #fff;
+  font-size: 1.13rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  margin: 12px 0 18px 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(76, 175, 255, 0.10);
+}
+.keyboard-detail-addcart:disabled {
+  background: #888a99;
+  color: #e0e0e0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.keyboard-detail-lowstock {
+  font-size: 1.08rem;
+  color: #ff4800;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+@media (max-width: 800px) {
+  .keyboard-detail-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    max-width: 98vw;
+    padding: 18px 6vw 18px 6vw;
+  }
+  .keyboard-detail-imgbox {
+    width: 100%;
+    max-width: 98vw;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .keyboard-detail-img {
+    width: 98vw;
+    max-width: 340px;
+    height: 200px;
+  }
+  .keyboard-detail-description-block {
+    min-width: unset;
+    max-width: 98vw;
+    padding: 14px 8px 10px 8px;
+  }
+  .keyboard-detail-info {
+    width: 100%;
+    align-items: flex-start;
+  }
+}

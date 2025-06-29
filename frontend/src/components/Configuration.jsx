@@ -46,7 +46,6 @@ const Configuration = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

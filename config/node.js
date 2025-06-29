@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const fs = require('fs');
 const app = express();
-const port = 8080;
+const port = 3080;
 
 app.use(express.json());
+app.use(cors());
 
 /** LOADERS **/
 
@@ -36,8 +38,7 @@ app.get('/keyboard', (req, res) => {
 
 app.get('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile('clavier.json');
-        const keyboard = config.find(item => item.id.toString() === req.params.id.toString());
+        const keyboard = loadJsonFile('clavier.json').find(item => item.id.toString() === req.params.id.toString());
 
         if (!keyboard) {
             return res.status(404).json({ error: 'Keyboard not found' });
@@ -59,7 +60,7 @@ app.post('/keyboard', (req, res) => {
             return res.status(400).json({ error: validation.error });
         }
 
-        const requiredFields = ['name', 'image_url', 'marque', 'type', 'switches', 'layout', 'wireless', 'rgb', 'hot_swappable', 'price', 'stock'];
+        const requiredFields = ['name', 'image_url', 'marque', 'type', 'switches', 'layout', 'wireless', 'rgb', 'hot_swappable', 'price', 'stock', 'description'];
         const missing = requiredFields.some(field => !newKeyboard[field]);
         if (missing) {
             return res.status(400).json({ error: 'Invalid keyboard data' });
@@ -68,6 +69,7 @@ app.post('/keyboard', (req, res) => {
         const maxId = config.length > 0 ? Math.max(...config.map(item => Number(item.id))) : 0;
         newKeyboard.id = maxId + 1;
         newKeyboard.rating = newKeyboard.rating || null;
+
 
         config.push(newKeyboard);
         fs.writeFileSync(__dirname + '/../ressources/clavier.json', JSON.stringify(config, null, 4));
@@ -99,10 +101,9 @@ app.patch('/keyboard/:id', (req, res) => {
 
 app.delete('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile('clavier.json');
-        const keyboardIndex = config.findIndex(item => item.id.toString() === req.params.id.toString());
+        const keyboard = loadJsonFile('clavier.json').find(item => item.id.toString() === req.params.id.toString());
 
-        if (keyboardIndex === -1) {
+        if (!keyboard) {
             return res.status(404).json({ error: 'Keyboard not found' });
         }
 
@@ -215,6 +216,69 @@ app.delete('/keycaps/:id', (req, res) => {
     }
 });
 
+/** ORDER API **/
+
+app.get('/order', (req, res) => {
+    try {
+        const orders = loadJsonFile('orders.json');
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load orders' });
+    }
+});
+
+app.post('/keycaps', (req, res) => {
+    try {
+        const orders = loadJsonFile('orders.json');
+        const { idclient, cart } = req.body;
+        if (!idclient || !cart || !Array.isArray(cart) || cart.length === 0) {
+            return res.status(400).json({ error: 'idclient et cart sont requis' });
+        }
+        const maxId = orders.length > 0 ? Math.max(...orders.map(o => Number(o.id))) : 0;
+        const newOrder = {
+            id: maxId + 1,
+            idclient,
+            cart,
+            date: new Date().toISOString(),
+            status: 'en attente'
+        };
+        orders.push(newOrder);
+        fs.writeFileSync(__dirname + '/../ressources/orders.json', JSON.stringify(orders, null, 4));
+        res.status(201).json(newOrder);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create order' });
+    }
+});
+
+app.patch('/order/:id', (req, res) => {
+    try {
+        const orders = loadJsonFile('orders.json');
+        const orderIndex = orders.findIndex(o => o.id.toString() === req.params.id.toString());
+        if (orderIndex === -1) return res.status(404).json({ error: 'Order not found' });
+        const updatedOrder = { ...orders[orderIndex], ...req.body };
+        orders[orderIndex] = updatedOrder;
+        fs.writeFileSync(__dirname + '/../ressources/orders.json', JSON.stringify(orders, null, 4));
+        res.json(updatedOrder);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update order' });
+    }
+});
+
+app.delete('/order/:id', (req, res) => {
+    try {
+        const orders = loadJsonFile('orders.json');
+        const orderIndex = orders.findIndex(o => o.id.toString() === req.params.id.toString());
+        if (orderIndex === -1) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        const deletedOrder = orders.splice(orderIndex, 1)[0];
+        fs.writeFileSync(__dirname + '/../ressources/orders.json', JSON.stringify(orders, null, 4));
+        res.status(200).json({ message: 'Commande annulée', order: deletedOrder });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete order' });
+    }
+});
+
 /** VALIDATION **/
 
 function validateFields(data, type, required = true) {
@@ -234,7 +298,8 @@ function validateFields(data, type, required = true) {
         switches: 'string',
         wireless: 'boolean',
         rgb: 'boolean',
-        hot_swappable: 'boolean'
+        hot_swappable: 'boolean',
+        description: 'string'
     };
 
     const keycapsSchema = {
@@ -242,7 +307,8 @@ function validateFields(data, type, required = true) {
         profile: 'string',
         material: 'string',
         shine_through: 'boolean',
-        colorway: 'string'
+        colorway: 'string',
+        description: 'string'
     };
 
     const schema = type === 'keyboard' ? keyboardSchema : keycapsSchema;
