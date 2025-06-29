@@ -38,8 +38,7 @@ app.get('/keyboard', (req, res) => {
 
 app.get('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile('clavier.json');
-        const keyboard = config.find(item => item.id.toString() === req.params.id.toString());
+        const keyboard = loadJsonFile('clavier.json').find(item => item.id.toString() === req.params.id.toString());
 
         if (!keyboard) {
             return res.status(404).json({ error: 'Keyboard not found' });
@@ -71,6 +70,7 @@ app.post('/keyboard', (req, res) => {
         newKeyboard.id = maxId + 1;
         newKeyboard.rating = newKeyboard.rating || null;
 
+
         config.push(newKeyboard);
         fs.writeFileSync(__dirname + '/../ressources/clavier.json', JSON.stringify(config, null, 4));
         res.status(201).json(newKeyboard);
@@ -101,10 +101,9 @@ app.patch('/keyboard/:id', (req, res) => {
 
 app.delete('/keyboard/:id', (req, res) => {
     try {
-        const config = loadJsonFile('clavier.json');
-        const keyboardIndex = config.findIndex(item => item.id.toString() === req.params.id.toString());
+        const keyboard = loadJsonFile('clavier.json').find(item => item.id.toString() === req.params.id.toString());
 
-        if (keyboardIndex === -1) {
+        if (!keyboard) {
             return res.status(404).json({ error: 'Keyboard not found' });
         }
 
@@ -228,7 +227,7 @@ app.get('/order', (req, res) => {
     }
 });
 
-app.post('/order', (req, res) => {
+app.post('/keycaps', (req, res) => {
     try {
         const orders = loadJsonFile('orders.json');
         const { idclient, cart } = req.body;
