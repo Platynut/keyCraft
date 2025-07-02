@@ -10,10 +10,14 @@ const Accueil = () => {
         
       <Header />
       <div className="bienvenue">Bienvenue sur notre site de clavier personalisables !</div>
-      <Annonce />
+      
       <div className="main">
+        <Annonce />
         <Collection />
       </div>
+      <div className="footer-container">
+      <Footer />
+    </div>
     </div>
   );
 }
