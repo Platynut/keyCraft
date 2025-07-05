@@ -9,11 +9,13 @@ const Accueil = () => {
     <div>
         
       <Header />
-      <div className="bienvenue">Bienvenue sur notre site de clavier personalisables !</div>
-      
+      <div className="bienvenue">
+      <div className="bleufr"></div><div className="blancfr">Bienvenue sur notre site de clavier Français !</div><div className="rougefr"></div>
+      </div>
       <div className="main">
         <Annonce />
         <Collection />
+
       </div>
       <div className="footer-container">
       <Footer />

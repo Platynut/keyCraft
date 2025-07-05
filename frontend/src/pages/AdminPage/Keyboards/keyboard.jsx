@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+ 
 export default function AdminKeyboards() {
   const [keyboards, setKeyboards] = useState([]);
   const [form, setForm] = useState({ name: '', marque: '', type: '', switches: '', layout: '', wireless: false, rgb: false, hot_swappable: false, price: '', stock: '' });
@@ -86,6 +86,8 @@ export default function AdminKeyboards() {
           ))}
         </tbody>
       </table>
+      
     </div>
+  
   );
 }

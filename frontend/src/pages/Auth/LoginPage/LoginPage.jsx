@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Headers from '../../../components/Header';
+import Header from '../../../components/Header';
 import '../../../styles/globals.css';
-import styles from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Footer from '../../../components/Footer';
 
 function Login({ onLogin }) {
   const navigate = useNavigate();
@@ -41,36 +41,44 @@ function Login({ onLogin }) {
   };
 
   return (
-    <>
-    <Headers />
-    <div className={styles.container}>
-      <h2>Connexion</h2>
-      {message && <p>{message}</p>}
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          value={emailOrusername}
-          placeholder="Email ou pseudo"
-          onChange={(e) => setEmailOrUsername(e.target.value)}
-          required
-        /><br />
-        <input
-          type="password"
-          value={password}
-          placeholder="Mot de passe"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /><br />
-        <button type="submit">Connexion</button>
-        <button type="button" onClick={handleRegister}>S'inscrire</button>
-      </form>
-      <p style={{ marginTop: '10px' }}>
-        <Link to="/forgot-password" className={styles.link}>
-          Mot de passe oublié ?
-        </Link>
-      </p>
+    <div >
+      <Header />
+      <div className='main-account'>
+        <div className="profile-box">
+          <h2>Connexion à votre compte KeyCraft</h2>
+          {message && <p>{message}</p>}
+          <form className="profile-form" onSubmit={handleLogin}>
+            <input
+              className="inputbox"
+              type="text"
+              value={emailOrusername}
+              placeholder="Email ou pseudo"
+              onChange={(e) => setEmailOrUsername(e.target.value)}
+              required
+            />
+            <input
+              className="inputbox"
+              type="password"
+              value={password}
+              placeholder="Mot de passe"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <p className='mdp_oublie'>
+            <Link className="mdp_oublie_texte" to="/forgot-password" >
+              Mot de passe oublié ?
+            </Link>
+            </p>
+            <div className='button-container'>
+              <button className="loginbutton" type="submit">Connexion</button>
+              <button className="loginbutton" type="button" onClick={handleRegister}>S'inscrire</button>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+      <Footer />
     </div>
-    </>
   );
 }
 
