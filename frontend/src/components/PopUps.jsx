@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import PagePaiement from "./Page_paiement";
+import Login from "../pages/Auth/LoginPage/LoginPage.jsx"
 import './css/PopUps.css';
 
 const FenetrePanier = ({ bouton }) => {
@@ -16,6 +17,11 @@ const FenetrePanier = ({ bouton }) => {
             const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
             setCart(storedCart);
             setSubtotal(storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0));
+            // Redirige vers la page de connexion si pas d'idclient
+            const idclient = localStorage.getItem('idclient');
+            if (!idclient) {
+                window.location.href = '/Login';
+            }
         }
     }, [showpopup]);
 
@@ -36,7 +42,7 @@ const FenetrePanier = ({ bouton }) => {
     const handlePaiement = async () => {
         const idclient = localStorage.getItem('idclient');
         if (!idclient) {
-            alert('Vous devez être connecté pour passer commande.');
+            window.location.href = '/Login';
             return;
         }
         try {
@@ -52,6 +58,15 @@ const FenetrePanier = ({ bouton }) => {
             }
         } catch (e) {
             alert('Erreur lors de la commande.');
+        }
+    };
+
+    const handleGoToPaiement = () => {
+        const idclient = localStorage.getItem('idclient');
+        if (!idclient) {
+            window.location.href = '/Login';
+        } else {
+            window.location.href = '/Page_paiement';
         }
     };
 
@@ -88,11 +103,14 @@ const FenetrePanier = ({ bouton }) => {
                                                         }}>-</button>
                                                         <span style={{margin: '0 8px'}}>{item.quantity}</span>
                                                         <button className="panier_qte_btn" onClick={() => {
-                                                            const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity + 1 } : it);
-                                                            setCart(newCart);
-                                                            localStorage.setItem('cart', JSON.stringify(newCart));
-                                                            setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));
-                                                        }}>+</button>
+                                                            const currentStock = item.stock ?? 99;
+                                                            if (item.quantity < currentStock) {
+                                                                const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity + 1 } : it);
+                                                                setCart(newCart);
+                                                                localStorage.setItem('cart', JSON.stringify(newCart));
+                                                                setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));
+                                                            }
+                                                        }} disabled={item.quantity >= (item.stock ?? 99)}>+</button>
                                                     </div>
                                                     {item.price}€
                                                 </div>
@@ -106,10 +124,9 @@ const FenetrePanier = ({ bouton }) => {
                                     </div>
                                     <hr />
                                     <div className="panier_button">
-                                        <PagePaiement onOrder={() => {
-                                            setCart([]);
-                                            setSubtotal(0);
-                                        }} />
+                                        <button className="btn_commander" onClick={handleGoToPaiement}>
+                                            Aller au paiement
+                                        </button>
                                     </div>
                                 </div>
                             </div>

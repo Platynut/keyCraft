@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 import Product from "./Product";
-import Filtres from "./Filtres";
+import Filtres from "./KeyboardFilter";
 import { Link } from "react-router-dom";
 import './css/Keyboards.css';
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import Filtres from "./Filtres";
+import Filtres from "./KeyboardFilter";
 import Product from "./Product";
 import { Link } from "react-router-dom";
 const Configuration = () => {

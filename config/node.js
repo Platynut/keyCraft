@@ -227,7 +227,7 @@ app.get('/order', (req, res) => {
     }
 });
 
-app.post('/keycaps', (req, res) => {
+app.post('/order', (req, res) => {
     try {
         const orders = loadJsonFile('orders.json');
         const { idclient, cart } = req.body;

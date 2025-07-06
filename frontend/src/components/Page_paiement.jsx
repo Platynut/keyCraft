@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Login from "../pages/Auth/LoginPage/LoginPage";
 
 const PagePaiement = ({ onOrder }) => {
   const [processing, setProcessing] = useState(false);
@@ -7,7 +8,7 @@ const PagePaiement = ({ onOrder }) => {
 
   const handleOrder = async () => {
     if (!idclient) {
-      alert('Vous devez être connecté pour commander.');
+      <Login />
       return;
     }
     if (!cart.length) {
