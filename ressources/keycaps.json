@@ -8,7 +8,7 @@
         "layout": "ANSI",
         "colorway": "Red/Black",
         "shine_through": false,
-        "price": 120.00,
+        "price": 1,
         "stock": 10,
         "rating": 4.8
     },
@@ -21,7 +21,7 @@
         "layout": "ISO",
         "colorway": "Orange/White",
         "shine_through": false,
-        "price": 100.00,
+        "price": 100,
         "stock": 7,
         "rating": 4.5
     },
@@ -34,7 +34,7 @@
         "layout": "ANSI",
         "colorway": "Gray/Black",
         "shine_through": false,
-        "price": 130.00,
+        "price": 130,
         "stock": 5,
         "rating": 4.7
     },
@@ -47,7 +47,7 @@
         "layout": "ANSI",
         "colorway": "Black/Translucent",
         "shine_through": true,
-        "price": 30.00,
+        "price": 30,
         "stock": 20,
         "rating": 4.2
     }

@@ -14,35 +14,35 @@ const Configuration = () => {
                 <div className="best-seller-conteneur">
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                     <div className="best-seller-item">
                         <Link to="/" className="nodecoration"><Product img="https://pbs.twimg.com/media/FS3sDIKWQAUzeBs.jpg"
-                        title="Configuration l'ane" prix="150€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                        title="Configuration l'ane" prix="150" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
                     </div>
                 </div>
             </div>

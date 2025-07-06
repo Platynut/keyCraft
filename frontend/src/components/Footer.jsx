@@ -33,7 +33,7 @@ const Footer = () => {
                     <Link to="/Support">Support</Link>  <br />
                 </div>
             </div>
-            <Link to="/" className="main-button">KeyCraft</Link>
+            <div onClick={() => window.scrollTo({top: 0, behavior: "smooth"})} className="main-button">KeyCraft</div>
         </footer>
     );
 };

@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import React, { useState, useEffect, use } from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import PagePaiement from "./Page_paiement";
-import Login from "../pages/Auth/LoginPage/LoginPage.jsx"
 import './css/PopUps.css';
-
 const FenetrePanier = ({ bouton }) => {
-    const [showpopup, setshowpopup] = useState(false);
+    const [showpopup, setshowpopuppanier] = useState(false);
     const [cart, setCart] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
 
@@ -17,7 +13,6 @@ const FenetrePanier = ({ bouton }) => {
             const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
             setCart(storedCart);
             setSubtotal(storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0));
-            // Redirige vers la page de connexion si pas d'idclient
             const idclient = localStorage.getItem('idclient');
             if (!idclient) {
                 window.location.href = '/Login';
@@ -36,7 +31,7 @@ const FenetrePanier = ({ bouton }) => {
     }, []);
 
     const togglepopup = () => {
-        setshowpopup(!showpopup);
+        setshowpopuppanier(!showpopup);
     };
 
     const handlePaiement = async () => {
@@ -70,6 +65,8 @@ const FenetrePanier = ({ bouton }) => {
         }
     };
 
+    const idclient = localStorage.getItem('idclient');
+
     return (
         <div>
             <img onClick={togglepopup} src={bouton} />
@@ -92,7 +89,6 @@ const FenetrePanier = ({ bouton }) => {
                                                 <img className="miniature_panier" src={item.url} alt={item.name} />
                                                 <div className="description">
                                                     {item.name} <br />
-                                                    Qté : <br />
                                                     <div className="panier_qte_group">
                                                         <button className="panier_qte_btn" onClick={() => {
                                                             const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity - 1 } : it)
@@ -123,11 +119,15 @@ const FenetrePanier = ({ bouton }) => {
                                         <div className="sous_total"><div>Sous-total</div><div>{subtotal.toFixed(2)}€</div></div>
                                     </div>
                                     <hr />
-                                    <div className="panier_button">
-                                        <button className="btn_commander" onClick={handleGoToPaiement}>
-                                            Aller au paiement
-                                        </button>
-                                    </div>
+                                    {idclient ? (
+                                        <PagePaiement cart={cart} subtotal={subtotal} idclient={idclient} />
+                                    ) : (
+                                        <div className="panier_button">
+                                            <button className="btn_commander" onClick={() => window.location.href = '/Login'}>
+                                                Se connecter pour commander
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -137,21 +137,102 @@ const FenetrePanier = ({ bouton }) => {
         </div>
     );
 }
-const Searchbar = ({bouton}) => {
-    const [showpopupsearch, setshowpopup] = useState(false);
 
-    const togglepopup = () => {
-        setshowpopup(!showpopupsearch);
+const Searchbar = ({bouton}) => {
+    const [query, setQuery] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
+    const [produits, setProduits] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error , setError] = useState(null);
+
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
     };
+    
+    useEffect(() => {
+        if (showPopup) {
+            var listeProduits = []
+            setIsLoading(true);
+            fetch('http://localhost:3080/keyboard')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    listeProduits.push(...data);
+                    setIsLoading(false);
+                })
+                .catch(err => {
+                    setError('Erreur lors du chargement');
+                    setIsLoading(false);
+                });
+
+            fetch('http://localhost:3080/keycaps')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    listeProduits.push(...data);
+                    setIsLoading(false);
+                })
+                .catch(err => {
+                    setError('Erreur lors du chargement');
+                    setIsLoading(false);
+                });
+            setProduits(listeProduits);
+        }
+    }, [showPopup]);    
+    const produitsFiltres = produits.filter(p =>
+        p.name && p.name.toLowerCase().includes(query.toLowerCase())
+    );
 
     return (
         <div>
-            
-            <img className="bouton_recherche" onClick={togglepopup} src={bouton}/>
-            {showpopupsearch && 
+            <img className="bouton_recherche" onClick={togglePopup} src={bouton}/>
+            {showPopup && 
                 ReactDOM.createPortal(
                     <div className="searchbar">
-                        <input className="input_searchbar" placeholder="Rechercher un produit"/>
+                        <div className="input_cross" onClick={(e) => e.stopPropagation()}>
+
+                            <input 
+                            className="input_searchbar" 
+                            placeholder="Rechercher un produit"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            />
+                            <img className="searchbar_cross" onClick={togglePopup} src="https://img.icons8.com/?size=50&id=VaHFapP3XCAj&format=png&color=ffffff" alt="" />
+                        </div> 
+
+                        {isLoading && <div>Chargement...</div>}
+                        {error && <div>{error}</div>}
+                        
+                        {!isLoading && !error && (
+                            <ul className="resultats">
+                                {produitsFiltres.length > 0 ? (
+                                    produitsFiltres.map(produit => {
+                                        const link = produit.switches ? `/keyboard/${produit.id}` : `/keycap/${produit.id}`;
+                                        return (
+                                            <li  key={produit.id} >
+                                                <Link className="li_searchbar" to={link}>
+                                                    <img className="image_resultat" src={produit.url}  />
+                                                    <div className="description_li_searchbar">
+                                                        <div>{produit.name}</div>
+                                                        <div>{produit.price} €</div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        );
+                                    })
+                                ) : (
+                                    <li>Aucun résultat</li>
+                                )}
+                            </ul>
+                    )}
                     </div>,
                     document.body
                 )}
@@ -169,7 +250,6 @@ const Clavier = ({bouton}) => {
 
     return (
         <div>
-            
             <div className="bouton_header" onClick={handleGoToKeyboards}>{bouton}</div>
         </div>
         

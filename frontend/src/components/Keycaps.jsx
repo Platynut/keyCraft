@@ -1,24 +1,68 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 import Filtres from "./KeycapFilter";
 import Product from "./Product";
+import Footer from "./Footer";
 import { Link } from "react-router-dom";
-const Keycaps = () => {
+import './css/Keyboards.css';
+
+function buildQueryString(filters) {
+    const params = Object.entries(filters)
+        .filter(([_, value]) => value !== undefined && value !== null && value !== "")
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&');
+    return params ? `?${params}` : '';
+}
+
+function Keyboards() {
+    const [keyboards, setKeyboards] = useState([]);
+    const [filters, setFilters] = useState({});
+
+    const fetchFilteredKeyboards = useCallback(async (filters) => {
+        const query = buildQueryString(filters);
+        try {
+            const response = await fetch(`http://localhost:3080/keycaps${query}`);
+            if (!response.ok) {
+                throw new Error('Error while fetching keyboards');
+            }
+            const data = await response.json();
+            setKeyboards(data);
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+            setKeyboards([]);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchFilteredKeyboards(filters);
+    }, [filters, fetchFilteredKeyboards]);
+
+    const handleSearch = (newFilters) => {
+        setFilters(newFilters);
+    };
+
     return (
-        <div className="configuration">
+        <div>
             <Header />
             <div className="boite">
-                <Filtres text1="clavier" text2="keycaps" text3="switches" text4="accessoires" text5="clavier gamer"
-                text6="clavier mécanique" text7="clavier ergonomique" text8="clavier silencieux" text9="clavier rétroéclairé" text10="clavier sans fil"/>
-                <div className="best-seller-conteneur">
-                    <div className="best-seller-item">
-                        <Link to="/" className="nodecoration"><Product img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkTjfG3ia2duL25yVJ4ozBNJaSFx5GbQT5heZfPLGtn9A4Jufej42Kt-XXQcodklSqFaY&usqp=CAU"
-                        title="Touche joker degueu" prix="19.99€" text1="groslard" text2="groslardon" text3="petitlard"/></Link>
+                <div className="filtre_elements">
+                    <Filtres onSearch={handleSearch} />
+                    <div>
+                        <div className="grid">
+                            {keyboards.map((keycap) => (
+                                <div key={keycap.id} className="card" id={keycap.id}>
+                                    <Link to={`/keycaps/${keycap.id}`}>
+                                        <Product img={keycap.url} title={keycap.name} prix={keycap.price} rating={keycap.rating} />
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
 
-export default Keycaps;
+export default Keyboards;

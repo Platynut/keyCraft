@@ -20,12 +20,10 @@ const KeyboardFilter = ({ onSearch }) => {
             .then((res) => res.json())
             .then((data) => {
                 setKeyboards(data);
-                // Extraction des marques uniques triées
                 const uniqueBrands = Array.from(new Set(data.map(k => k.brand || k.marque)))
                     .filter(Boolean)
                     .sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' }));
                 setBrands(uniqueBrands);
-                // Extraction des layouts uniques triés
                 const uniqueLayouts = Array.from(new Set(data.map(k => k.layout)))
                     .filter(Boolean)
                     .sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' }));

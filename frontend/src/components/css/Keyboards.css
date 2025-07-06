@@ -121,7 +121,6 @@
   justify-content: flex-start;
 }
 .card:hover {
-  transform: translateY(-7px) scale(1.03);
   box-shadow: 0 10px 32px 0 #4e9cff22, 0 2px 12px rgba(0,0,0,0.13);
   border-color: #4e9cff;
 }
