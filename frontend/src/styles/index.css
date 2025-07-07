@@ -567,6 +567,7 @@ footer .main-button {
   height: 400px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 40px;
 }
 
 .carousel-img {

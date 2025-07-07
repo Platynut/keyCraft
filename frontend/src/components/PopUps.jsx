@@ -13,10 +13,6 @@ const FenetrePanier = ({ bouton }) => {
             const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
             setCart(storedCart);
             setSubtotal(storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0));
-            const idclient = localStorage.getItem('idclient');
-            if (!idclient) {
-                window.location.href = '/Login';
-            }
         }
     }, [showpopup]);
 
@@ -282,9 +278,9 @@ const Communauté = ({bouton}) => {
                             <div>
                                 <div className="bandeau">
                                     <div className="bandeau_titre"> <h4>Meilleurs concepts</h4>
-                                        <div>clavier 1</div>
-                                        <div>clavier 2</div>
-                                        <div>clavier 3</div>
+                                        <div>Clavier du mois</div>
+                                        <div>KeyCap du mois</div>
+                                        <div>Forum</div>
                                     </div>
                                     <div className="bandeau_titre"> <h4>Jeux concours</h4>
                                         <div>Participer</div>
@@ -323,15 +319,13 @@ const Support = ({bouton}) => {
                             <div>
                                 <div className="bandeau">
                                     <div className="bandeau_titre"> <h4>Retours et remboursements</h4>
-                                        <div>clavier 1</div>
-                                        <div>clavier 2</div>
-                                        <div>clavier 3</div>
-                                        <div>clavier 4</div>
+                                        <div>Je fais un retour</div>
+                                        <div>Je veux me faire rembourser</div>
+                                        <div>Autre demande</div>
                                     </div>
-                                    <div className="bandeau_titre"> <h4>Conditions générales</h4>
+                                    <div className="bandeau_titre"> <h4>Informations essentielles</h4>
                                         <div>Politique de confidentialité</div>
-                                        <div>clavier 2</div>
-
+                                        <div>Conditions générales</div>
                                     </div>
                                     <div className="bandeau_titre"> <h4>Contact</h4>
                                         <div>Tél: 01 23 45 67 89</div>
