@@ -4,7 +4,7 @@ body{
 
 .management-button {
           display: block;
-          margin: 0 auto 24px auto;
+          margin: 24px auto 24px auto;
           padding: 10px 24px;
           background: linear-gradient(90deg, #4f8cff 0%, #2356c7 100%);
           color: #fff;
@@ -14,5 +14,4 @@ body{
           font-weight: 600;
           box-shadow: 0 2px 8px rgba(79,140,255,0.12);
           cursor: pointer;
-          transition: background 0.2s, transform 0.1s;
         }

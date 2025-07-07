@@ -91,8 +91,12 @@ const FenetrePanier = ({ bouton }) => {
                                                     {item.name} <br />
                                                     <div className="panier_qte_group">
                                                         <button className="panier_qte_btn" onClick={() => {
-                                                            const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity - 1 } : it)
-                                                                .filter(it => it.quantity > 0);
+                                                            const newCart = cart.map((it) => {
+                                                                if (it.id === item.id && it.name === item.name) {
+                                                                    return { ...it, quantity: it.quantity - 1 };
+                                                                }
+                                                                return it;
+                                                            }).filter(it => it.quantity > 0);
                                                             setCart(newCart);
                                                             localStorage.setItem('cart', JSON.stringify(newCart));
                                                             setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));
@@ -101,7 +105,12 @@ const FenetrePanier = ({ bouton }) => {
                                                         <button className="panier_qte_btn" onClick={() => {
                                                             const currentStock = item.stock ?? 99;
                                                             if (item.quantity < currentStock) {
-                                                                const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity + 1 } : it);
+                                                                const newCart = cart.map((it) => {
+                                                                    if (it.id === item.id && it.name === item.name) {
+                                                                        return { ...it, quantity: it.quantity + 1 };
+                                                                    }
+                                                                    return it;
+                                                                });
                                                                 setCart(newCart);
                                                                 localStorage.setItem('cart', JSON.stringify(newCart));
                                                                 setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));

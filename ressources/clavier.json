@@ -18,12 +18,12 @@
     {
         "id": 2,
         "name": "Logitech G Pro X TKL",
-        "url": "",
+        "url": "https://m.media-amazon.com/images/I/81cw42BnzyL.__AC_SY300_SX300_QL70_ML2_.jpg",
         "marque": "Logitech",
         "type": "Gaming",
         "switches": "GX Blue",
         "layout": "TKL",
-        "wireless": false,
+        "wireless": true,
         "rgb": true,
         "hot_swappable": true,
         "price": 129.99,
@@ -34,7 +34,7 @@
     {
         "id": 3,
         "name": "Akko 3068B Plus",
-        "url": "",
+        "url": "https://maxesport.gg/medias/2024/10/AKKO-MOD-007-HE-PC-Santorini-1-640x640.webp",
         "marque": "Akko",
         "type": "Custom",
         "switches": "Akko CS Jelly Pink",
@@ -50,7 +50,7 @@
     {
         "id": 4,
         "name": "Razer Huntsman Mini",
-        "url": "",
+        "url": "https://m.media-amazon.com/images/I/71RunXyA77L._AC_SL1500_.jpg",
         "marque": "Razer",
         "type": "Gaming",
         "switches": "Razer Optical Red",
@@ -66,7 +66,7 @@
     {
         "id": 5,
         "name": "Ducky One 3 SF",
-        "url": "",
+        "url": "https://media.materiel.net/r900/products/MN0006000282.jpg",
         "marque": "Ducky",
         "type": "Gaming",
         "switches": "Cherry MX Brown",
@@ -82,7 +82,7 @@
     {
         "id": 6,
         "name": "GMK67",
-        "url": "",
+        "url": "https://m.media-amazon.com/images/I/71bSf5BdbxL._AC_SL1500_.jpg",
         "marque": "Skyloong",
         "type": "Custom",
         "switches": "Kailh Box White",
@@ -98,7 +98,7 @@
     {
         "id": 7,
         "name": "Anne Pro 2",
-        "url": "",
+        "url": "https://image.darty.com/darty?type=image&source=/market/2020/07/28/15324121_1507_1.jpg&width=267&height=400&quality=90&effects=Pad(CC,FFFFFF)",
         "marque": "Obinslab",
         "type": "Gaming",
         "switches": "Gateron Brown",
@@ -114,7 +114,7 @@
     {
         "id": 8,
         "name": "Glorious GMMK Pro",
-        "url": "",
+        "url": "https://maxesport.gg/medias/2022/04/GMMK-2-COMPACT-NOIR-6-640x640.webp",
         "marque": "Glorious",
         "type": "Custom",
         "switches": "Barebone (no switches)",
@@ -130,7 +130,7 @@
     {
         "id": 9,
         "name": "SteelSeries Apex Pro TKL",
-        "url": "",
+        "url": "https://m.media-amazon.com/images/I/719h65mTOEL.__AC_SX300_SY300_QL70_ML2_.jpg",
         "marque": "SteelSeries",
         "type": "Gaming",
         "switches": "OmniPoint Adjustable",
@@ -146,7 +146,7 @@
     {
         "id": 10,
         "name": "Royal Kludge RK84",
-        "url": "",
+        "url": "https://m.media-amazon.com/images/I/61hSrEmyMdL._AC_SL1500_.jpg",
         "marque": "Royal Kludge",
         "type": "Custom",
         "switches": "RK Red",
@@ -162,7 +162,7 @@
     {
         "id": 11,
         "name": "Corsair K70 RGB MK.2",
-        "url": "",
+        "url": "https://m.media-amazon.com/images/I/7147YGPMlBL._AC_SL1500_.jpg",
         "marque": "Corsair",
         "type": "Gaming",
         "switches": "Cherry MX Red",
@@ -178,7 +178,7 @@
     {
         "id": 12,
         "name": "Epomaker TH80",
-        "url": "",
+        "url": "https://epomaker.fr/cdn/shop/files/IMG_0532.jpg?v=1714018199&width=600",
         "marque": "Epomaker",
         "type": "Custom",
         "switches": "Gateron Pro Yellow",

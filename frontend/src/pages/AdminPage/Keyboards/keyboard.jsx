@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminKeyboards() {
+  const navigate = useNavigate();
   const [keyboards, setKeyboards] = useState([]);
   const [form, setForm] = useState({ name: '', marque: '', type: '', switches: '', layout: '', wireless: false, rgb: false, hot_swappable: false, price: '', stock: '' });
   const [editId, setEditId] = useState(null);
@@ -100,6 +102,9 @@ export default function AdminKeyboards() {
           ))}
         </tbody>
       </table>
+      <button className='management-button' onClick={() => navigate('/admin')}>
+        Retour au dashboard admin
+      </button>
     </div>
   );
 }

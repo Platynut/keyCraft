@@ -72,21 +72,6 @@ const handleToggleAdmin = async (id) => {
   return (
     <div className="form-container">
       <h2>Dashboard Admin</h2>
-      <button className='management-button'
-        onClick={() => navigate('/admin/keyboard')}
-      >
-        Gérer les claviers
-      </button>
-      <button className='management-button'
-        onClick={() => navigate('/admin/keycaps')}
-      >
-        Gérer les keycaps
-      </button>
-      <button className='management-button'
-        onClick={() => navigate('/admin/orders')}
-      >
-        Gérer les commandes
-      </button>
       {message && (
         <div style={{ color: message.includes('succès') ? 'green' : 'red', marginBottom: 10 }}>
           {message}
@@ -139,6 +124,21 @@ const handleToggleAdmin = async (id) => {
       ) : (
         <div>Aucun utilisateur trouvé.</div>
       )}
+      <button className='management-button'
+        onClick={() => navigate('/admin/keyboard')}
+      >
+        Gérer les claviers
+      </button>
+      <button className='management-button'
+        onClick={() => navigate('/admin/keycaps')}
+      >
+        Gérer les keycaps
+      </button>
+      <button className='management-button'
+        onClick={() => navigate('/admin/orders')}
+      >
+        Gérer les commandes
+      </button>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminKeycaps() {
+  const navigate = useNavigate();
   const [keycaps, setKeycaps] = useState([]);
   const [form, setForm] = useState({ name: '', profile: '', material: '', layout: '', colorway: '', shine_through: false, price: '', stock: '' });
   const [editId, setEditId] = useState(null);
@@ -96,6 +98,9 @@ export default function AdminKeycaps() {
           ))}
         </tbody>
       </table>
+      <button className='management-button' onClick={() => navigate('/admin')}>
+        Retour au dashboard admin
+      </button>
     </div>
   );
 }

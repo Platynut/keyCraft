@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminOrders() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [message, setMessage] = useState('');
 
@@ -78,6 +80,9 @@ export default function AdminOrders() {
           ))}
         </tbody>
       </table>
+      <button className='management-button' onClick={() => navigate('/admin')}>
+        Retour au dashboard admin
+      </button>
     </div>
   );
 }
