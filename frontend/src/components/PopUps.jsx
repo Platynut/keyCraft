@@ -142,22 +142,31 @@ const FenetrePanier = ({ bouton }) => {
         </div>
     );
 }
-
+/*---------------------------------------------------------------------------------------------------------------------*/
 const Searchbar = ({bouton}) => {
-    const [query, setQuery] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
-    const [produits, setProduits] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error , setError] = useState(null);
+    
+    const [query, setQuery] = useState(''); // État pour la requête de recherche
+    
+    const [showPopup, setShowPopup] = useState(false); // État pour afficher ou non le popup
+    
+    const [produits, setProduits] = useState([]); // Liste des produits récupérés depuis l'API
+    
+    const [isLoading, setIsLoading] = useState(false); // Indique si les données sont en cours de chargement
+    
+    const [error , setError] = useState(null); // Stocke une éventuelle erreur de chargement
 
+    // Ouvre ou ferme le popup de recherche
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
     
+    // Charge les produits depuis l'API quand le popup s'ouvre
     useEffect(() => {
         if (showPopup) {
             var listeProduits = []
             setIsLoading(true);
+
+            // Récupère les claviers
             fetch('http://localhost:3080/keyboard')
                 .then(response => {
                     if (!response.ok) {
@@ -174,6 +183,7 @@ const Searchbar = ({bouton}) => {
                     setIsLoading(false);
                 });
 
+            // Récupère les keycaps
             fetch('http://localhost:3080/keycaps')
                 .then(response => {
                     if (!response.ok) {
@@ -189,37 +199,50 @@ const Searchbar = ({bouton}) => {
                     setError('Erreur lors du chargement');
                     setIsLoading(false);
                 });
+
+            // Met à jour la liste des produits affichés
             setProduits(listeProduits);
         }
     }, [showPopup]);    
+
+    // Filtre les produits selon la requête de recherche
     const produitsFiltres = produits.filter(p =>
         p.name && p.name.toLowerCase().includes(query.toLowerCase())
     );
 
     return (
         <div>
+
+            {/* Bouton pour ouvrir la barre de recherche */}
             <img className="bouton_recherche" onClick={togglePopup} src={bouton}/>
             {showPopup && 
                 ReactDOM.createPortal(
                     <div className="searchbar">
                         <div className="input_cross" onClick={(e) => e.stopPropagation()}>
 
+                            {/* Champ de saisie de la recherche */}
                             <input 
                             className="input_searchbar" 
                             placeholder="Rechercher un produit"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             />
+
+                            {/* Bouton pour fermer la barre de recherche */}
                             <img className="searchbar_cross" onClick={togglePopup} src="https://img.icons8.com/?size=50&id=VaHFapP3XCAj&format=png&color=ffffff" alt="" />
                         </div> 
 
+                        {/* Affichage du chargement ou des erreurs */}
                         {isLoading && <div>Chargement...</div>}
                         {error && <div>{error}</div>}
                         
+                        {/* Affichage des résultats filtrés */}
                         {!isLoading && !error && (
                             <ul className="resultats">
                                 {produitsFiltres.length > 0 ? (
                                     produitsFiltres.map(produit => {
+                                        
+                                        // Détermine le lien selon le type de produit
                                         const link = produit.switches ? `/keyboard/${produit.id}` : `/keycap/${produit.id}`;
                                         return (
                                             <li  key={produit.id} >
@@ -245,6 +268,7 @@ const Searchbar = ({bouton}) => {
         
     );
 }
+/*---------------------------------------------------------------------------------------------------------------------*/
 const Clavier = ({bouton}) => {
     const [showpopupclavier, setshowpopup] = useState(false);
     const navigate = (typeof window !== 'undefined' && window.location) ? (url) => window.location.href = url : () => {};
