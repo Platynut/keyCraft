@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './admin.css';
 
 function AdminDashboard() {
   const [stats, setStats] = useState(null);
@@ -123,6 +124,21 @@ const handleToggleAdmin = async (id) => {
       ) : (
         <div>Aucun utilisateur trouvé.</div>
       )}
+      <button className='management-button'
+        onClick={() => navigate('/admin/keyboard')}
+      >
+        Gérer les claviers
+      </button>
+      <button className='management-button'
+        onClick={() => navigate('/admin/keycaps')}
+      >
+        Gérer les keycaps
+      </button>
+      <button className='management-button'
+        onClick={() => navigate('/admin/orders')}
+      >
+        Gérer les commandes
+      </button>
     </div>
   );
 }

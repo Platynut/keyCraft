@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 import Product from "./Product";
-import Filtres from "./Filtres";
+import Filtres from "./KeyboardFilter";
+import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import './css/Keyboards.css';
 
@@ -41,20 +42,25 @@ function Keyboards() {
     };
 
     return (
-        <div className="container">
+        <div>
             <Header />
             <div className="boite">
-                <Filtres onSearch={handleSearch} />
-                <div className="grid">
-                    {keyboards.map((keyboard) => (
-                        <div key={keyboard.id} className="card" id={keyboard.id}>
-                            <Link to={`/keyboard/${keyboard.id}`}>
-                                <Product img={keyboard.url} title={keyboard.name} prix={keyboard.price} rating={keyboard.rating} />
-                            </Link>
+                <div className="filtre_elements">
+                    <Filtres onSearch={handleSearch} />
+                    <div>
+                        <div className="grid">
+                            {keyboards.map((keyboard) => (
+                                <div key={keyboard.id} className="card" id={keyboard.id}>
+                                    <Link to={`/keyboard/${keyboard.id}`}>
+                                        <Product img={keyboard.url} title={keyboard.name} prix={keyboard.price} rating={keyboard.rating} />
+                                    </Link>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import React, { useState, useEffect, use } from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import PagePaiement from "./Page_paiement";
 import './css/PopUps.css';
-
 const FenetrePanier = ({ bouton }) => {
-    const [showpopup, setshowpopup] = useState(false);
+    const [showpopup, setshowpopuppanier] = useState(false);
     const [cart, setCart] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
 
@@ -30,13 +27,13 @@ const FenetrePanier = ({ bouton }) => {
     }, []);
 
     const togglepopup = () => {
-        setshowpopup(!showpopup);
+        setshowpopuppanier(!showpopup);
     };
 
     const handlePaiement = async () => {
         const idclient = localStorage.getItem('idclient');
         if (!idclient) {
-            alert('Vous devez être connecté pour passer commande.');
+            window.location.href = '/Login';
             return;
         }
         try {
@@ -54,6 +51,17 @@ const FenetrePanier = ({ bouton }) => {
             alert('Erreur lors de la commande.');
         }
     };
+
+    const handleGoToPaiement = () => {
+        const idclient = localStorage.getItem('idclient');
+        if (!idclient) {
+            window.location.href = '/Login';
+        } else {
+            window.location.href = '/Page_paiement';
+        }
+    };
+
+    const idclient = localStorage.getItem('idclient');
 
     return (
         <div>
@@ -77,22 +85,33 @@ const FenetrePanier = ({ bouton }) => {
                                                 <img className="miniature_panier" src={item.url} alt={item.name} />
                                                 <div className="description">
                                                     {item.name} <br />
-                                                    Qté : <br />
                                                     <div className="panier_qte_group">
                                                         <button className="panier_qte_btn" onClick={() => {
-                                                            const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity - 1 } : it)
-                                                                .filter(it => it.quantity > 0);
+                                                            const newCart = cart.map((it) => {
+                                                                if (it.id === item.id && it.name === item.name) {
+                                                                    return { ...it, quantity: it.quantity - 1 };
+                                                                }
+                                                                return it;
+                                                            }).filter(it => it.quantity > 0);
                                                             setCart(newCart);
                                                             localStorage.setItem('cart', JSON.stringify(newCart));
                                                             setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));
                                                         }}>-</button>
                                                         <span style={{margin: '0 8px'}}>{item.quantity}</span>
                                                         <button className="panier_qte_btn" onClick={() => {
-                                                            const newCart = cart.map((it, i) => i === idx ? { ...it, quantity: it.quantity + 1 } : it);
-                                                            setCart(newCart);
-                                                            localStorage.setItem('cart', JSON.stringify(newCart));
-                                                            setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));
-                                                        }}>+</button>
+                                                            const currentStock = item.stock ?? 99;
+                                                            if (item.quantity < currentStock) {
+                                                                const newCart = cart.map((it) => {
+                                                                    if (it.id === item.id && it.name === item.name) {
+                                                                        return { ...it, quantity: it.quantity + 1 };
+                                                                    }
+                                                                    return it;
+                                                                });
+                                                                setCart(newCart);
+                                                                localStorage.setItem('cart', JSON.stringify(newCart));
+                                                                setSubtotal(newCart.reduce((sum, it) => sum + it.price * it.quantity, 0));
+                                                            }
+                                                        }} disabled={item.quantity >= (item.stock ?? 99)}>+</button>
                                                     </div>
                                                     {item.price}€
                                                 </div>
@@ -105,12 +124,15 @@ const FenetrePanier = ({ bouton }) => {
                                         <div className="sous_total"><div>Sous-total</div><div>{subtotal.toFixed(2)}€</div></div>
                                     </div>
                                     <hr />
-                                    <div className="panier_button">
-                                        <PagePaiement onOrder={() => {
-                                            setCart([]);
-                                            setSubtotal(0);
-                                        }} />
-                                    </div>
+                                    {idclient ? (
+                                        <PagePaiement cart={cart} subtotal={subtotal} idclient={idclient} />
+                                    ) : (
+                                        <div className="panier_button">
+                                            <button className="btn_commander" onClick={() => window.location.href = '/Login'}>
+                                                Se connecter pour commander
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -120,21 +142,125 @@ const FenetrePanier = ({ bouton }) => {
         </div>
     );
 }
+/*---------------------------------------------------------------------------------------------------------------------*/
 const Searchbar = ({bouton}) => {
-    const [showpopupsearch, setshowpopup] = useState(false);
+    
+    const [query, setQuery] = useState(''); // État pour la requête de recherche
+    
+    const [showPopup, setShowPopup] = useState(false); // État pour afficher ou non le popup
+    
+    const [produits, setProduits] = useState([]); // Liste des produits récupérés depuis l'API
+    
+    const [isLoading, setIsLoading] = useState(false); // Indique si les données sont en cours de chargement
+    
+    const [error , setError] = useState(null); // Stocke une éventuelle erreur de chargement
 
-    const togglepopup = () => {
-        setshowpopup(!showpopupsearch);
+    // Ouvre ou ferme le popup de recherche
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
     };
+    
+    // Charge les produits depuis l'API quand le popup s'ouvre
+    useEffect(() => {
+        if (showPopup) {
+            var listeProduits = []
+            setIsLoading(true);
+
+            // Récupère les claviers
+            fetch('http://localhost:3080/keyboard')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    listeProduits.push(...data);
+                    setIsLoading(false);
+                })
+                .catch(err => {
+                    setError('Erreur lors du chargement');
+                    setIsLoading(false);
+                });
+
+            // Récupère les keycaps
+            fetch('http://localhost:3080/keycaps')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    listeProduits.push(...data);
+                    setIsLoading(false);
+                })
+                .catch(err => {
+                    setError('Erreur lors du chargement');
+                    setIsLoading(false);
+                });
+
+            // Met à jour la liste des produits affichés
+            setProduits(listeProduits);
+        }
+    }, [showPopup]);    
+
+    // Filtre les produits selon la requête de recherche
+    const produitsFiltres = produits.filter(p =>
+        p.name && p.name.toLowerCase().includes(query.toLowerCase())
+    );
 
     return (
         <div>
-            
-            <img className="bouton_recherche" onClick={togglepopup} src={bouton}/>
-            {showpopupsearch && 
+
+            {/* Bouton pour ouvrir la barre de recherche */}
+            <img className="bouton_recherche" onClick={togglePopup} src={bouton}/>
+            {showPopup && 
                 ReactDOM.createPortal(
                     <div className="searchbar">
-                        <input className="input_searchbar" placeholder="Rechercher un produit"/>
+                        <div className="input_cross" onClick={(e) => e.stopPropagation()}>
+
+                            {/* Champ de saisie de la recherche */}
+                            <input 
+                            className="input_searchbar" 
+                            placeholder="Rechercher un produit"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            />
+
+                            {/* Bouton pour fermer la barre de recherche */}
+                            <img className="searchbar_cross" onClick={togglePopup} src="https://img.icons8.com/?size=50&id=VaHFapP3XCAj&format=png&color=ffffff" alt="" />
+                        </div> 
+
+                        {/* Affichage du chargement ou des erreurs */}
+                        {isLoading && <div>Chargement...</div>}
+                        {error && <div>{error}</div>}
+                        
+                        {/* Affichage des résultats filtrés */}
+                        {!isLoading && !error && (
+                            <ul className="resultats">
+                                {produitsFiltres.length > 0 ? (
+                                    produitsFiltres.map(produit => {
+                                        
+                                        // Détermine le lien selon le type de produit
+                                        const link = produit.switches ? `/keyboard/${produit.id}` : `/keycap/${produit.id}`;
+                                        return (
+                                            <li  key={produit.id} >
+                                                <Link className="li_searchbar" to={link}>
+                                                    <img className="image_resultat" src={produit.url}  />
+                                                    <div className="description_li_searchbar">
+                                                        <div>{produit.name}</div>
+                                                        <div>{produit.price} €</div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        );
+                                    })
+                                ) : (
+                                    <li>Aucun résultat</li>
+                                )}
+                            </ul>
+                    )}
                     </div>,
                     document.body
                 )}
@@ -142,6 +268,7 @@ const Searchbar = ({bouton}) => {
         
     );
 }
+/*---------------------------------------------------------------------------------------------------------------------*/
 const Clavier = ({bouton}) => {
     const [showpopupclavier, setshowpopup] = useState(false);
     const navigate = (typeof window !== 'undefined' && window.location) ? (url) => window.location.href = url : () => {};
@@ -152,7 +279,6 @@ const Clavier = ({bouton}) => {
 
     return (
         <div>
-            
             <div className="bouton_header" onClick={handleGoToKeyboards}>{bouton}</div>
         </div>
         
@@ -176,9 +302,9 @@ const Communauté = ({bouton}) => {
                             <div>
                                 <div className="bandeau">
                                     <div className="bandeau_titre"> <h4>Meilleurs concepts</h4>
-                                        <div>clavier 1</div>
-                                        <div>clavier 2</div>
-                                        <div>clavier 3</div>
+                                        <div>Clavier du mois</div>
+                                        <div>KeyCap du mois</div>
+                                        <div>Forum</div>
                                     </div>
                                     <div className="bandeau_titre"> <h4>Jeux concours</h4>
                                         <div>Participer</div>
@@ -217,15 +343,13 @@ const Support = ({bouton}) => {
                             <div>
                                 <div className="bandeau">
                                     <div className="bandeau_titre"> <h4>Retours et remboursements</h4>
-                                        <div>clavier 1</div>
-                                        <div>clavier 2</div>
-                                        <div>clavier 3</div>
-                                        <div>clavier 4</div>
+                                        <div>Je fais un retour</div>
+                                        <div>Je veux me faire rembourser</div>
+                                        <div>Autre demande</div>
                                     </div>
-                                    <div className="bandeau_titre"> <h4>Conditions générales</h4>
+                                    <div className="bandeau_titre"> <h4>Informations essentielles</h4>
                                         <div>Politique de confidentialité</div>
-                                        <div>clavier 2</div>
-
+                                        <div>Conditions générales</div>
                                     </div>
                                     <div className="bandeau_titre"> <h4>Contact</h4>
                                         <div>Tél: 01 23 45 67 89</div>

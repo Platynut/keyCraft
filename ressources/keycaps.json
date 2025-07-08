@@ -8,9 +8,10 @@
         "layout": "ANSI",
         "colorway": "Red/Black",
         "shine_through": false,
-        "price": 120.00,
+        "price": 1,
         "stock": 10,
-        "rating": 4.8
+        "rating": 4.8,
+        "description": "Un set de keycaps GMK Red Samurai au profil Cherry, finition ABS, coloris rouge/noir emblématique, compatible ANSI. Idéal pour un look samouraï premium."
     },
     {
         "id": 2,
@@ -21,9 +22,10 @@
         "layout": "ISO",
         "colorway": "Orange/White",
         "shine_through": false,
-        "price": 100.00,
+        "price": 100,
         "stock": 7,
-        "rating": 4.5
+        "rating": 4.5,
+        "description": "ePBT Grand Tour, profil Cherry, matériau PBT, coloris orange/blanc, pour layout ISO. Un set inspiré des voyages et de la route, durable et vif."
     },
     {
         "id": 3,
@@ -34,9 +36,10 @@
         "layout": "ANSI",
         "colorway": "Gray/Black",
         "shine_through": false,
-        "price": 130.00,
+        "price": 130,
         "stock": 5,
-        "rating": 4.7
+        "rating": 4.7,
+        "description": "Domikey Dolch, profil SA, ABS, colorway gris/noir, pour ANSI. Un classique rétro haut de gamme, parfait pour les amateurs de vintage."
     },
     {
         "id": 4,
@@ -47,8 +50,9 @@
         "layout": "ANSI",
         "colorway": "Black/Translucent",
         "shine_through": true,
-        "price": 30.00,
+        "price": 30,
         "stock": 20,
-        "rating": 4.2
+        "rating": 4.2,
+        "description": "Pudding Keycaps, profil OEM, PBT, colorway noir/translucide, shine-through. Idéal pour RGB, effet lumineux spectaculaire, grande résistance."
     }
 ]

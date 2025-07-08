@@ -1,0 +1,17 @@
+body{
+    color: aliceblue;
+}
+
+.management-button {
+          display: block;
+          margin: 24px auto 24px auto;
+          padding: 10px 24px;
+          background: linear-gradient(90deg, #4f8cff 0%, #2356c7 100%);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          font-size: 1.1rem;
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(79,140,255,0.12);
+          cursor: pointer;
+        }

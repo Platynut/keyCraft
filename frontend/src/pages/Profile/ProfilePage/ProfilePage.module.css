@@ -107,6 +107,29 @@
   margin: 8px 0 0 0;
   padding-left: 18px;
 }
+.adminButton {
+  display: block;
+  margin: 24px auto 20px auto;
+  padding: 10px 24px;
+  background: linear-gradient(90deg, #4f8cff 0%, #2356c7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(79,140,255,0.12);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.adminButton:hover {
+  background: linear-gradient(90deg, #2356c7 0%, #4f8cff 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+.adminButton:active {
+  background: #2356c7;
+  transform: scale(0.98);
+}
+
 
 
 @media (max-width: 600px) {

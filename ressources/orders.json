@@ -17,7 +17,7 @@
             }
         ],
         "totalPrice": 235.88,
-        "status": "en attente",
+        "status": "livrée",
         "date": "2025-06-12T09:56:30.569Z"
     },
     {
@@ -40,6 +40,94 @@
             }
         ],
         "date": "2025-06-29T16:26:02.817Z",
+        "status": "annulée"
+    },
+    {
+        "id": 6,
+        "idclient": "685ecb929d5413c38977d6dd",
+        "cart": [
+            {
+                "id": 1,
+                "name": "GMK Red Samurai",
+                "price": 1,
+                "url": "https://m.media-amazon.com/images/I/61pUF1ax-nL._UF1000,1000_QL80_.jpg",
+                "quantity": 99
+            }
+        ],
+        "date": "2025-07-06T15:37:19.727Z",
+        "status": "en attente"
+    },
+    {
+        "id": 7,
+        "idclient": "685ecb929d5413c38977d6dd",
+        "cart": [
+            {
+                "id": 4,
+                "name": "Razer Huntsman Mini",
+                "price": 99.99,
+                "url": "",
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "name": "Logitech G Pro X TKL",
+                "price": 129.99,
+                "url": "",
+                "quantity": 1
+            },
+            {
+                "id": 1,
+                "name": "GMK Red Samurai",
+                "price": 1,
+                "url": "https://m.media-amazon.com/images/I/61pUF1ax-nL._UF1000,1000_QL80_.jpg",
+                "quantity": 1
+            }
+        ],
+        "date": "2025-07-07T17:39:39.244Z",
+        "status": "en attente"
+    },
+    {
+        "id": 8,
+        "idclient": "685ecb929d5413c38977d6dd",
+        "cart": [
+            {
+                "id": 3,
+                "name": "Akko 3068B Plus",
+                "price": 89.99,
+                "url": "https://maxesport.gg/medias/2024/10/AKKO-MOD-007-HE-PC-Santorini-1-640x640.webp",
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "name": "ePBT Grand Tour",
+                "price": 100,
+                "url": "https://cdn.candykeys.com/public/1830/responsive-images/0___media_library_original_658_370.jpeg",
+                "quantity": 1
+            }
+        ],
+        "date": "2025-07-07T17:52:45.444Z",
+        "status": "expédiée"
+    },
+    {
+        "id": 9,
+        "idclient": "685ecb929d5413c38977d6dd",
+        "cart": [
+            {
+                "id": 1,
+                "name": "Keychron Q1",
+                "price": 169.99,
+                "url": "https://keychron.fr/cdn/shop/products/Keychron-Q1-black.jpg?v=1750842829&width=900",
+                "quantity": 1
+            },
+            {
+                "id": 2,
+                "name": "Logitech G Pro X TKL",
+                "price": 129.99,
+                "url": "",
+                "quantity": 1
+            }
+        ],
+        "date": "2025-07-08T06:00:39.533Z",
         "status": "en attente"
     }
 ]

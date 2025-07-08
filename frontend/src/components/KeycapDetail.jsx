@@ -3,40 +3,40 @@ import { useParams } from "react-router-dom";
 import Header from "./Header";
 import './css/KeyboardDetail.css';
 
-function KeyboardDetail() {
+function KeycapDetail() {
   const { id } = useParams();
-  const [keyboard, setKeyboard] = useState(null);
+  const [keycap, setKeycap] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3080/keyboard/${id}`)
+    fetch(`http://localhost:3080/keycaps/${id}`)
       .then(res => {
         if (!res.ok) throw new Error('Not found');
         return res.json();
       })
       .then(data => {
-        setKeyboard(data);
+        setKeycap(Array.isArray(data) ? data[0] : data);
         setLoading(false);
       })
       .catch(err => {
-        setError('Erreur lors du chargement du clavier');
+        setError('Erreur lors du chargement du keycap');
         setLoading(false);
       });
   }, [id]);
 
   const handleAddToCart = () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existing = cart.find(item => item.id === keyboard._id || item.id === keyboard.id);
+    const existing = cart.find(item => item.id === keycap._id || item.id === keycap.id);
     if (existing) {
       existing.quantity += 1;
     } else {
       cart.push({
-        id: keyboard._id || keyboard.id,
-        name: keyboard.name,
-        price: keyboard.price,
-        url: keyboard.url,
+        id: keycap._id || keycap.id,
+        name: keycap.name,
+        price: keycap.price,
+        url: keycap.url,
         quantity: 1
       });
     }
@@ -47,27 +47,27 @@ function KeyboardDetail() {
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>{error}</p>;
-  if (!keyboard) return <p>Clavier introuvable</p>;
+  if (!keycap) return <p>Keycap introuvable</p>;
 
   return (
     <>
       <Header />
       <div className="keyboard-detail-container">
         <div className="keyboard-detail-imgbox">
-          <img src={keyboard.url} alt={keyboard.name} className="keyboard-detail-img" />
+          <img src={keycap.url} alt={keycap.name} className="keyboard-detail-img" />
           <div className="keyboard-detail-description-block">
             <h3>Description</h3>
-            <p className="keyboard-detail-description">{keyboard.description || 'Aucune description.'}</p>
+            <p className="keyboard-detail-description">{keycap.description || 'Aucune description.'}</p>
           </div>
         </div>
         <div className="keyboard-detail-info">
-          <h2 className="keyboard-detail-title">{keyboard.name}</h2>
-          <div className="keyboard-detail-price">{keyboard.price} €</div>
-          <div className="keyboard-detail-rating">Note : <span>{keyboard.rating} / 5</span></div>
+          <h2 className="keyboard-detail-title">{keycap.name}</h2>
+          <div className="keyboard-detail-price">{keycap.price} €</div>
+          <div className="keyboard-detail-rating">Note : <span>{keycap.rating} / 5</span></div>
           <button 
             className="keyboard-detail-addcart" 
             onClick={handleAddToCart} 
-            disabled={keyboard.stock === 0 || added}
+            disabled={keycap.stock === 0 || added}
           >
             {added ? "Ajouté !" : "Ajouter au panier"}
           </button>
@@ -77,4 +77,4 @@ function KeyboardDetail() {
   );
 }
 
-export default KeyboardDetail;
+export default KeycapDetail;

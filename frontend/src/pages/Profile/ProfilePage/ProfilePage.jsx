@@ -183,6 +183,15 @@ function Profile() {
           </ul>
         )}
       </div>
+      {user && user.isAdmin && (
+        <button
+          type="button"
+          className={styles.adminButton}
+          onClick={() => window.location.href = '/admin'}
+        >
+          Accès Admin
+        </button>
+      )}
     </>
   );
 }

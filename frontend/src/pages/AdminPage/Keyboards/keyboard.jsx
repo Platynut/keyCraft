@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminKeyboards() {
+  const navigate = useNavigate();
   const [keyboards, setKeyboards] = useState([]);
   const [form, setForm] = useState({ name: '', marque: '', type: '', switches: '', layout: '', wireless: false, rgb: false, hot_swappable: false, price: '', stock: '' });
   const [editId, setEditId] = useState(null);
+  const [message, setMessage] = useState('');
 
   const loadKeyboards = async () => {
-    const res = await fetch('/admin/keyboards');
+    const res = await fetch('http://localhost:3080/keyboard');
     setKeyboards(await res.json());
   };
 
@@ -19,8 +22,8 @@ export default function AdminKeyboards() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const method = editId ? 'PUT' : 'POST';
-    const url = editId ? `/admin/keyboards/${editId}` : '/admin/keyboards';
+    const method = editId ? 'PATCH' : 'POST';
+    const url = editId ? `http://localhost:3080/keyboard/${editId}` : 'http://localhost:3080/keyboard';
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -29,7 +32,12 @@ export default function AdminKeyboards() {
     if (res.ok) {
       setForm({ name: '', marque: '', type: '', switches: '', layout: '', wireless: false, rgb: false, hot_swappable: false, price: '', stock: '' });
       setEditId(null);
+      setMessage(editId ? 'Clavier modifié avec succès.' : 'Clavier ajouté avec succès.');
       loadKeyboards();
+      setTimeout(() => setMessage(''), 2000);
+    } else {
+      setMessage('Erreur lors de l\'enregistrement.');
+      setTimeout(() => setMessage(''), 2000);
     }
   };
 
@@ -40,14 +48,22 @@ export default function AdminKeyboards() {
 
   const handleDelete = async id => {
     if (window.confirm("Supprimer ?")) {
-      await fetch(`/admin/keyboards/${id}`, { method: 'DELETE' });
-      loadKeyboards();
+      const res = await fetch(`http://localhost:3080/keyboard/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setMessage('Clavier supprimé avec succès.');
+        loadKeyboards();
+        setTimeout(() => setMessage(''), 2000);
+      } else {
+        setMessage('Erreur lors de la suppression.');
+        setTimeout(() => setMessage(''), 2000);
+      }
     }
   };
 
   return (
     <div>
       <h2>Gestion des claviers</h2>
+      {message && <div style={{marginBottom: 12, color: message.includes('succès') ? 'green' : 'red'}}>{message}</div>}
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="Nom" value={form.name} onChange={handleChange} />
         <input name="marque" placeholder="Marque" value={form.marque} onChange={handleChange} />
@@ -86,6 +102,9 @@ export default function AdminKeyboards() {
           ))}
         </tbody>
       </table>
+      <button className='management-button' onClick={() => navigate('/admin')}>
+        Retour au dashboard admin
+      </button>
     </div>
   );
 }
