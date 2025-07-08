@@ -118,6 +118,7 @@ function Profile() {
   // Déconnexion
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('idclient');
     navigate('/login');
   };
 
